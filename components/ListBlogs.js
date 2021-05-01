@@ -110,10 +110,11 @@ const ListBlogs = ({ title, tags, summary, slug, reading_time }) => {
           fontSize="md"
           color="cyan.900"
           ml="2px"
+          mb = "15px"
         >
           {reading_time["text"]}
         </Text>
-        <SimpleGrid
+        {/* <SimpleGrid
           columns={4}
           spacingX={2}
           spacingY={2}
@@ -124,7 +125,7 @@ const ListBlogs = ({ title, tags, summary, slug, reading_time }) => {
           overflow="visible"
         >
           <ListTags tags={tags} />
-        </SimpleGrid>
+        </SimpleGrid> */}
       </Box>
       
     </Container>
