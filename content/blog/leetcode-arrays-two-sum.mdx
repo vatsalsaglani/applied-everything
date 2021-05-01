@@ -1,0 +1,89 @@
+---
+title: "Two Sum in Python using dictionary"
+publishedAt: "2021-04-01"
+summary: "Trying the most common two sum problem using Python and comparing different solution techniques"
+tags: "python3, program, arrays, lists, algorithms, data structures, two sum"
+---
+
+In most of the interviews one has the choice of selecting a language of their choice. Most people choose languages which has a very good default library support like Python.
+
+Here, we will look at solutions and brief explanation of some common interview questions related to Arrays (Lists).
+
+## Two Sum
+
+### Question
+
+Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
+
+You may assume that each input would have **exactly one solution**,and you may not use the same element twice.
+
+```dart:Input
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+```
+
+#### Short Explanation
+
+In this problem we are given a list of integers which may or may not be sorted and a target integer; and we need to find the indices for which the sum of numbers on those indices will be equal to the given target.
+
+Let's look at a bruteforce solution for this problem. We can have two for loops and loop one starting at **0<sup>th</sup>** index and another start at **index 1**.
+So if the parent loop is at <i>index - i</i> the child loop will be at <i>index - i+1</i>
+Now, we will compare the `target` with the sum of integers at position `i` and `i+1` and if the condition statisfies we will return `[i, i+1]`.
+
+```dart:twosum_bruteforce.py
+def twoSums(nums, target):
+
+    for ix, num in enumerate(nums):
+        for ixm, nnum in enumerate(nums[ix+1:]):
+            if num + nnum == target:
+                print(num, nnum)
+                return [ix, ix+ixm+1]
+```
+
+This solution works but the time complexity of this solution is **O(n<sup>2</sup>)** and we can do better than this. Let's try one more solution with a dictionary or non-python people can call it a _hashmap_
+
+```dart:twosum_dict.py
+def twoSums(nums, target):
+
+    seen = {}
+
+    for ix, num in enumerate(nums):
+
+        if target - num in seen:
+            return [seen[target-num], ix]
+
+        seen[num] = ix
+```
+
+In this solution we use a dictionary to keep track of integers in the list and their index. We start with an empty dictionary and once we start looping over the numbers list we check if the difference of target and number at current index is in the dictionary.If it's availale in the dictionary we take the index i.e. value of the integer key and the current index and return it.
+Here we for a difference between target and current index value and see how much difference should we add to the current value to make it equal to the target and if that difference is available as a key in our dictionary. This works because it's given that there will always be a unique pair available for summation to reach the target.
+
+It seems somewhat complicated, I know so let's try to make it more understandable with an example.
+For example we are given a list of integers `[2, 4, 7, 11]` and the target is `9`. Let's go step by step here:
+
+```dart:steps
+STEP - 1
+seen = {} # empty
+index = 0
+number = 2
+diff = 9 - 2 is 7 and our seen dictionary is empty, so we continue
+seen = {2:0}
+-----------------------------------------------------------------------------
+STEP - 2
+seen = {2:0}
+index = 1
+number = 4
+diff = 9 - 4 is 3 and our dictionary doesn't have 3, so we continue
+seen = {2:0, 4:1}
+-----------------------------------------------------------------------------
+STEP - 3
+seen = {2:0, 4:1}
+index = 2
+number = 7
+diff = 9 - 7 is 2 and our dictionary has a key 2, so we pull out it's index
+index1 = seen[2] i.e. 0
+and we output [index1, index] i.e. [0, 2]
+-----------------------------------------------------------------------------
+```
+
+Here the time complexity is **O(n)**. That's it for this blog, hope you found this helpful. You can connect with me on <a href="https://twitter.com/saglanivatsal">twitter</a>
