@@ -73,7 +73,7 @@ const ListBlogs = ({ title, tags, summary, slug, reading_time }) => {
               fontWeight="bold"
               textAlign="justify"
               color={textColor[colorMode]}
-              fontSize="2xl"
+              fontSize="xl"
               letterSpacing="wide"
               mt="15px"
               mb="1px"
@@ -89,7 +89,7 @@ const ListBlogs = ({ title, tags, summary, slug, reading_time }) => {
         <Text
           fontWeight="bold"
           textAlign="justify"
-          fontSize="lg"
+          fontSize="md"
           color={textColor[colorMode]}
           ml="4px"
           mb="3px"
@@ -107,7 +107,7 @@ const ListBlogs = ({ title, tags, summary, slug, reading_time }) => {
         <Text
           fontWeight="bold"
           textAlign="justify"
-          fontSize="md"
+          fontSize="sm"
           color="cyan.900"
           ml="2px"
           mb = "15px"

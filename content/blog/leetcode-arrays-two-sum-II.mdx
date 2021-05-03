@@ -1,0 +1,66 @@
+---
+title: "Two Sum II in Python using pointers"
+publishedAt: "2021-05-01"
+summary: "The Two sum II problem is the extension of the Two Sum problem which can be solved using the pointers technique"
+tags: "python3, program, arrays, lists, pointers, algorithms, data structures, two sum II"
+---
+
+As seen in the question <a target="_blank" href="/blog/leetcode-arrays-two-sum">Two Sum in Python using dictionary</a> given a list of `integers` and a `target` integer the algorithm needs to return the indices of two numbers which can be added to get the target. 
+Here the only change is the given list is sorted in ascending order which can be used as an advantage.
+
+## Two Sum II
+
+### Question
+
+Given an array of integers `numbers` that is already sorted in ascending order, find two numbers such that they add up to a specific `target` number.
+
+Return the indices of the two numbers (**1-indexed**) as an integer array `answer` of size `2`, where `1 <= answer[0] < answer[1] <= numbers.length`.
+
+
+The bruteforce solution will be same as the one in the <a target="_blank" href="/blog/leetcode-arrays-two-sum">previous blog</a>.
+
+
+### Solution and Explanation
+
+
+```dart:towsumtwo_onepass.py
+def twoSum(numbers, target):
+    
+    
+    left_ptr = 0
+    right_ptr = len(numbers) - 1
+    
+    while left_ptr < right_ptr:
+        
+        current_sum = numbers[right_ptr] + numbers[left_ptr]
+        
+        if current_sum > target:
+            
+            right_ptr -= 1
+        
+        elif current_sum < target:
+            
+            left_ptr += 1
+        
+        else:
+            
+            return [left_ptr + 1, right_ptr + 1]
+```
+
+#### Explanation
+
+As the numbers list is sorted we can use the one pass two pointer method wherein we can start with two different pointers one from the start of the list
+and anoter from the end. 
+
+The logic becomes more simpler. We just need to move the pointers based on the sum of the values of their indices. 
+
+If the sum is higher than the given target than move the right pointer towards the left i.e. `right_ptr -= 1`.
+
+If the sum is lesser than the target then we need to move the left pointer towards the rigth i.e. `left_ptr += 1`. 
+
+The only condition left is
+when the sum is equal to the given target and as mentioned in the problem we need to return **1-indexed** of the two indices. Hence, we will add 1 to both
+the `left_ptr` and `right_ptr`.
+
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a href="https://twitter.com/saglanivatsal">twitter</a>

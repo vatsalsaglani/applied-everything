@@ -1,0 +1,61 @@
+---
+title: "Find the Maximum amount of water which can be stored in a container"
+summary: "Given an array or heights we need to find two height between which the maximum water can be stored"
+publishedAt: "2021-05-03"
+tags: "python3, programming, arrays, lists, maxArea, leetcode"
+---
+
+## What's the question?
+
+Given n non-negative integers `a1, a2, ..., an ,` where each represents a point at coordinate `(i, ai)`. 
+`n` vertical lines are drawn such that the two endpoints of the line `i` is at `(i, ai)` and `(i, 0)`. 
+Find two lines, which, together with the x-axis forms a container, such that the container contains the most water.
+
+### Let's see some examples
+
+```dart:Example
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+```
+
+Instead of starting with a bruteforce solution for this problem as, we might have gone through the <a target="_blank" href="/blog/leetcode-arrays-two-sum">2Sum</a> and <a target="_blank" href="/blog/leetcode-arrays-two-sum=II">2Sum-II</a> problems wherein we use two pointers from the left and the right. 
+We can use the same approach here.
+
+We will start with a maximum area i.e. `maxArea` of `0` and then as we initialize our pointers to start and end we will calculate the area `length * height`. 
+
+Here the `length` will become `right_ptr - left_ptr` as each pole or line is at a distance of `1 unit` from each other. But now because we have two pointers we will have to 
+choose either of the one height.
+
+So to choose a height just imagine that if we choose a larger/bigger height out of the two then the water will start splilling from the smaller/shoter height pole so we should choose the 
+shorter pole. Now our area formula will become `(right_ptr - left_ptr) * min(height[left_ptr], height[right_ptr])`. 
+
+Once we compute this area, if this area is larger than the current `maxArea` we can replace the current `maxArea` with the computed area. So after every left and right pointer iteration/change we can have
+the `maxArea` written as `maxArea = max(maxArea, (right_ptr - left_ptr) * min(height[left_ptr], height[right_ptr]))`.
+
+## Let's code this out
+
+```dart:maxContainerEfficient.py
+def maxArea(height):
+
+    maxArea = 0
+    left_ptr = 0
+    right_ptr = len(height) - 1
+
+    while left_ptr < right_ptr:
+
+        maxArea = max(maxArea, (right_ptr - left_ptr) * min(height[left_ptr], height[right_ptr]))
+
+        if height[left_ptr] > height[right_ptr]:
+            right_ptr -= 1
+        elif height[right_ptr] > height[left_ptr]:
+            left_ptr += 1
+        else:
+            left_ptr += 1
+    
+    return maxArea
+```
+
+So that's it we did this in a single `while` loop. The logic behind updating the `left_ptr` and `right_ptr` is to move the either one when it's smaller than the other.
+This way we can stay at a higher ground for one pole and keep on checking with different heights of other poles.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a href="https://twitter.com/saglanivatsal">twitter</a>

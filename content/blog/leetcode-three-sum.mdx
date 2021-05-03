@@ -1,0 +1,110 @@
+---
+title: "Solving the 3Sum problem in Python"
+publishedAt: "2021-05-03"
+summary: "The 3Sum problem is one of the common problems asked in an interview. We can extend the two sum problem to solve this problem"
+tags: "python3, program, arrays, lists, pointers, algorithms, data structures, leetcode, three sum, 3sum"
+---
+
+## What's the question?
+
+Given an integer array of numbers, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, and `j != k`, and `nums[i] + nums[j] + nums[k] == 0`.
+
+The solution set shouldn't contain duplicate triplets
+
+### Let's see some examples
+
+```dart:Example
+Input: nums = [-1, 0, 1, 2, -1, 4]
+Output: [[-1, -1, 2], [-1, 0, 1]]
+```
+
+## How do we solve this?
+
+Now let's start with the good old bruteforce solution and later we can think about optimizing it. Take three four loops from index `n`, `n+1`, and `n+2` and check for the sum and if it's zero put them in a list and sort them and check if that list is available in the result list. If it's not available append that list to the result list.
+
+*Easy! Right*
+
+```dart:_3sum_bruteforce.py
+def _3SumBruteForce(numbers):
+
+    result = []
+    for ix, i in enumerate(numbers):
+        for ixj, j in enumerate(numbers[ix+1:]):
+            for ixk, k in enumerate(numbers[ixj+1:]):
+                s = i + j + k
+                if s == 0:
+                    lst = [i, j, k]
+                    lst.sort()
+                    if not lst in result:
+                        result.append(lst)
+    
+    return result
+```
+
+We know this solution can work but if we see the time complexity of the solution it's quite high just considering the **three for loops**. 
+
+So now let's look at a much better solution for this problem. 
+
+### Let's make things better
+
+If we remember anything from the <a href = "/blog/leetcode-arrays-two-sum-II">Two Sum or Two Sum II</a> we would find that this is somewhat similar to those problems. Instead of 2 numbers here we have three numbers and our target is `0`.
+
+So the first step would be a for loop to select the first number `index` and they we can initialize the `left_ptr` at `index+1` and our `right_ptr` at end of the list i.e. `len(nums)-1` and repeat the two sum logic for that. 
+
+One more important thing is to `sort` the list before starting all this as we know there are negative numbers at the start after we sort it then the problem just becomes which two numbers should we add to make that negative number as zero.
+
+```dart:_3sum_efficient.py
+def _3SumEfficient(numbers):
+
+    res = []
+
+    numbers.sort()
+    
+    for ix in range(len(numbers) - 2): # so the left and right pointer don't go out of bounds
+
+        # check if the previous number isn't same as the current number 
+        # if it's same then again we will find a same pair using left and right pointer for this number
+        if ix > 0 and numbers[ix] == numbers[ix-1]:
+            continue
+            
+        left_ptr = ix+1
+        right_ptr = len(numbers) - 1
+
+        while left_ptr < right_ptr:
+
+            three_sum = numbers[ix] + numbers[left_ptr] + numbers[right_ptr]
+
+            if three_sum < 0:
+
+                left_ptr += 1
+            
+            elif three_sum > 0:
+
+                right_ptr -= 1
+            
+            else:
+                # it will be zero
+                
+                res.append([numbers[ix], numbers[left_ptr], numbers[right_ptr]])
+
+                # update pointers
+                while left_ptr < right_ptr and numbers[left_ptr] == numbers[left_ptr + 1]:
+                
+                    left_ptr += 1
+                
+                while left_ptr < right_ptr and numbers[right_ptr] == numbers[right_ptr - 1]:
+
+                    right_ptr -= 1
+                
+                # move left towards right
+                left_ptr += 1
+                # move right toward left
+                right_ptr -= 1
+
+    
+    return res
+```
+
+In the solution above we have only one `for` loop and a `while` loop with two pointers so the time complexity will be lesser than the bruteforce solution.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">twitter</a>
