@@ -1,0 +1,60 @@
+---
+title: "Leetcode - 121: Best Time to Buy and Sell Stock"
+publishedAt: "2021-05-10"
+summary: "Given a list of prices we need to find when is the best time to buy and sell a stock"
+tags: "python, python3, leetcode, max profit, arrays, 121, leetcode 121, programming, coding, interview"
+---
+
+## What's the question?
+
+<blockquote>
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+</blockquote>
+
+### Let's check an example
+
+```dart:Example
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+```
+
+Here, we are given prices for 6 days we need to tell how can we earn a maximum profit by buy a stock on some day and selling it on some another day
+For the `prices` list given above we see that the minimum price to buy the stock when going from left to right is `1` and after the price `1` the maximum price which the stock can be sold for is `6` so the profit becomes `6 - 1 = 5`.
+
+*Pretty Easy right!* Let's translate this into some code  
+
+So, at the start we can initialize two variables `minPrice` which will be price at the 0<sup>th</sup> index and `profit` which will be `0` at the start. 
+
+Now as we iterate through the `prices` list we will have two steps,
+
+🔵 Step - 1: Check if `price` at current index is lesser than our `minPrice`
+    
+🟦 If `True` at Step - 1: Update the `minPrice` with the current price
+
+🔵 Step - 2: Update the profit
+
+To update the profit we can find the maximum between the current profit and difference between the current price and `minPrice`. If the `minPrice` in the first step would be changed then the differene between the current `price` and the `minPrice` will be `0`. And if the `profit` is greater than `0` it will remain unchanged and even if it's `0` it will remain `0` only.
+
+Once the end of the `for` loop is reached we return the `profit`
+
+### Let's code it out
+
+```dart:maxProfitStock.py
+def maxPrice(prices):
+
+    minPrice = min(prices)
+    profit = 0
+
+    for ix, price in enumerate(prices[1:]):
+
+        if price < minPrice:
+            minPrice = price
+        
+        profit = max(profit, prices[ix] - minPrice)
+    
+    return profit
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">twitter</a>

@@ -1,0 +1,102 @@
+---
+title: "Leetcode - 207: Course Schedule"
+summary: "Given number of courses and prerequisites check if the courses can be finished or not"
+publishedAt: "2021-05-10"
+tags: "leetcode, 207, graphs, python, python3, programming, dfs, dsa, algorithms, depth first search, course schedule, cycle detection, interview, coding"
+---
+
+## What's the question?
+
+<blockquote>
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+</blockquote>
+
+### Let's look at an example
+
+```dart:example
+Inputs
+numCourses = 2, prerequisites = [[1, 0]]
+
+Output: True
+```
+
+In the given example if we create an adjacency list of the pre-requisites it will look something like following
+```dart:adjacency_list
+adjacency_list = {
+    1: [0],
+    0: []
+}
+```
+In this case the prerequisites for `1` is `0` and there aren't any prerequisites to complete zero. So if we take `0` and then we take `1` we can finish the courses
+
+![Imgur](https://i.imgur.com/zL0rlCB.png)
+
+*Now, let's look at one more example*
+
+```dart:example_2
+Input
+numCourses = 2, prerequisites = [[1, 0], [0, 1]]
+
+Ouput: False
+```
+
+In case of this example we can make an adjacency list as follows:
+
+```dart:adjacency_list
+adjacency_list = {
+    1: [0],
+    0: [1]
+}
+```
+
+From above you might have noticed that, to complete course `1` we need to complete course `0` and to complete course `0` we need to complete course `1`. This sets the deadlock stage or make a cycle and we return `False`. 
+
+![Imgur](https://i.imgur.com/a2MHqO1.png)
+
+## Let's code it
+
+Using the prerequisites we make an adjacency list for the graph representation. We recursively travel the graph for every course and check if the prerequisites of that course is already visited and if so we return `False` and if there aren't any prerequisites for a particular course we return `True`. 
+
+```dart:course_schedule.py
+
+def canFinish(numCourses, prerequisites):
+
+    requirementsMap = {i:[] for i in range(numCourses)}
+
+    for course, req in prerequisites:
+        requirementsMap[course].append(req)
+    
+    visitset = set()
+
+    def dfs(course):
+
+        if requirementsMap[course] == []: return True
+
+        if course in visitset:
+            return False
+        
+        for reqs in requirementsMap[course]:
+
+            if not dfs(reqs):
+                return False
+        
+        # remove course from visit list if no cycle encountered for the prerequisites
+        visitset.remove(course)
+        # map the requirements for that course to empty list depecting satisfied prerequisites
+        requirementsMap[course] = []
+        # return with True for that course
+        return True
+    
+    for course in range(numCourses):
+        
+        if not dfs(course):
+            return False
+    
+    return True
+```
+
+Like all other graph based questions on Leetcode this question also uses recursion. It's not that intuitive, if done multiple times it's easy to understand.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">twitter</a>
