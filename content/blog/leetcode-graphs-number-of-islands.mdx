@@ -1,0 +1,92 @@
+---
+title: "Leetcode - 200: Number of Islands"
+summary: "Given a grid of '1' AND '0' return number of islands which can be formed"
+publishedAt: "2021-05-10"
+tags: "graphs, programming, python, python3, interview, coding, leetcode, dsa, algorithms, number of islands"
+---
+
+## What's the question?
+
+<blockquote>
+  Given an m x n 2D binary grid grid which represents a map of '1's (land) and
+  '0's (water), return the number of islands. An island is surrounded by water
+  and is formed by connecting adjacent lands horizontally or vertically. You may
+  assume all four edges of the grid are all surrounded by water.
+</blockquote>
+
+### Let's look at an example
+
+For a grid of "1" and "0" as follows the number of islands which can be formed is equal to `1`.
+
+![Imgur](https://i.imgur.com/FV9WGw2.png)
+
+As mentioned an Island is surrounded by water and formed by connecting adjacent lands horizontally and vertically. With this we can say that for any point if there is "1" on the left, right, top, or bottom it will form and island.
+
+And if for any point there are "1"s all around it than it will form one single island.
+
+Similarly, in the grid given above points a, b, c, d, e, f, g form lands with the points in their left, top, bottom and right and these points are all overlapping with one another so here only <b>one</b> big island is formed in this grid.
+
+
+## How do we solve this?
+
+From the grid we can deduce that it's a graph problem. In graph we can either use BFS or DFS traversal with some changes to accomplish our task. Here, we can use an iterative approach like BFS to keep things more simpler.
+
+We will start at a certain coordinate and if the value at that coordinate is "1" we will call the BFS functions to mark all the coordinates in it's surroundings as visited if the value on those coordinates is "1" and then we can increase our `islands` counter.
+
+Once we are done will all the coordinates we can return the value inside our `islands` counter. 
+
+*Easy right!*. Let's code this out
+
+### Show me the code
+
+```dart:number_of_islands.py
+import collections
+def numIslands(grid):
+
+    rows, cols = len(grid), len(grid[0])
+    visited = set()
+    islands = 0
+
+    def bfs(r, c):
+
+        q = collections.deque()
+        visited.add((r, c))
+        q.append((r, c))
+
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+        while q:
+            row, col = q.popleft()
+
+            for dr, dc in directions:
+
+                r, c = row + dr, col + dc
+
+                if (
+                        # row in bounds
+                        r in range(rows) and
+                        # col in bounds
+                        c in range(cols) and
+                        # condition to be island
+                        grid[r][c] ==
+                        "1"  # careful "0" and "1" are not `int` but `str`
+                        and
+                        # not already visited
+                    (r, c) not in visited):
+                    visited.add((r, c))
+                    q.append((r, c))
+
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == "1" and not (r, c) in visited:
+                # check coordinates in all directions from current `r` and `c` and 
+                # if they form the island then add it to visited list using bfs so for next iteration of 
+                # r, c if r, c are already in visited the loop will move for next combination or r and c
+                bfs(r, c)
+                islands += 1
+
+    
+    return islands
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>
