@@ -1,0 +1,119 @@
+---
+title: "Leetcode - 206: Reverse a Linked List"
+summary: "Given a linked list we need to reverse it"
+publishedAt: "2021-05-11"
+tags: "linked list, ll, dsa, algorithm, leetcode, reverse linked list, coding, interviews"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the head of a singly linked list, reverse the list, and return the
+  reversed list.
+</blockquote>
+
+### Let's look at an example
+
+```dart:example
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+```
+
+## How do we solve this?
+
+Before we begin with this problem related to linked lists if you haven't checked out my short theoritical blog on linked list check it out <a target="_blank" href="/blog/leetcode-linkedlists-about-linked-lists">here</a>.
+
+Moving on, we know that the pointer in the node refers provides a reference to the `next` node. So we can just change the pointer direction and our list will be reversed.
+
+Let's see what happens when we change the pointer directions.
+
+![Imgur](https://i.imgur.com/CSlqPGh.png)
+
+### So, how do we reverse the pointer references?
+
+It's easy we will initialize a variable `prev` with value `None` and start at the `head`, copy it into a temporary variable `temp` and set the `next` of `temp` i.e. `temp.next` to `prev` (at start the value of `prev` will be `None`) and set the `prev` variable to `temp` variable.
+
+I know it's two much in one paragraph so let's look it in some figures.
+
+_I know my handwriting isn't that good, so no comments please_ 😅
+
+#### Initial Stage
+
+```dart:variables
+prev = None
+```
+
+![Imgur](https://i.imgur.com/pvfbbeN.png)
+
+#### Iteration 1
+
+```dart:iteration1
+# using temporary variable to store current head
+temp = head
+# moving head to next node i.e. Node with value 2
+head = head.next
+# Node with value 1 points to prev i.e. None
+temp.next = prev
+# prev travels to temp i.e. Node with value 1
+prev = temp
+```
+
+![Imgur](https://i.imgur.com/USM6DYs.png)
+
+#### Iteration 2
+
+```dart:iteration2
+# using temporary variable to store current head
+temp = head
+# moving head to next node i.e. Node with value 3
+head = head.next
+# Node with value 2 points to prev i.e. Node with value 1
+temp.next = prev
+# prev travels to temp i.e. Node with value 2
+prev = temp
+```
+
+![Imgur](https://i.imgur.com/K5bjDk7.png)
+
+#### Iteration 4
+
+```dart:iteration2
+# using temporary variable to store current head
+temp = head
+# moving head to next node i.e. Node with value Node
+# nothing after 3 therefore None and loop will end after this
+head = head.next
+# Node with value 3 points to prev i.e. Node with value 2
+temp.next = prev
+# prev travels to temp i.e. Node with value 3
+prev = temp
+```
+
+![Imgur](https://i.imgur.com/miANqHB.png)
+
+From this you can see that as we reverse the links/pointer references the entire linked list gets reversed
+
+### Let's code it out
+
+```dart:reverse_linked_list.py
+
+def reverseLinkedList(head):
+
+    prev = None
+
+    while head:
+
+        temp = head
+
+        head = head.next
+
+        temp.next = prev
+
+        prev = temp
+
+    return prev
+```
+
+We return `prev` because once we reach the end while traveling from the end node and we reverse every pointer reference the last node will become our head node. So now `prev` will be at node with value `3` and it will become our head and we can return that.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>

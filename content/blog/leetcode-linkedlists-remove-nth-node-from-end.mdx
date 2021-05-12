@@ -1,0 +1,87 @@
+---
+title: "Leetcode - 19: Remove Nth Node From End of List"
+summary: "Given a linked list; we need to remove nth node from the end"
+publishedAt: "2021-05-12"
+tags: "linked lists, leetcode, leetcode 19, python3, python, programming, das, algorithms, coding, interview"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the head of a linked list, remove the nth node from the end of the list
+  and return its head.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input:
+head = [1, 2, 3, 4, 5]; n = 2
+Output:
+[1, 2, 3, 5]
+```
+
+## How do we solve this?
+
+We can use a <b>two pointer</b> approach to solve this problem. 
+
+We can initialize a `dummy` node point `left` pointer to it. We can point point the `right` pointer to the `head` node.
+
+![Imgur](https://i.imgur.com/BVX8IxQ.png)
+
+
+Until `n` is `0` we keep on moving the `right` pointer to the next node.
+
+![Imgur](https://i.imgur.com/e0KQMf9.png)
+
+![Imgur](https://i.imgur.com/tNSsgiv.png)
+
+
+
+
+Once `n` is `0` we move to the `left` pointer and `right` pointer to next nodes until `right` is not `None`
+
+![Imgur](https://i.imgur.com/LInt71u.png)
+
+
+![Imgur](https://i.imgur.com/uLjtoKf.png)
+
+
+
+Once `right` becomes `None` we will notice that our `left` pointer will be at a node whose neighbour is the `n`<sup>th</sup> from the end.
+
+What do we do? We change the refrence pointer of the left to the refrence pointer of next of next i.e. the next node's neighbour.
+
+![Imgur](https://i.imgur.com/fI5cg4f.png)
+
+[Imgur](https://i.imgur.com/BVajOX9.png)
+
+
+## Let's code it out
+
+```dart:removeNthNodeFromEnd.py
+
+def removeNthNodeFromEnd(head, n):
+
+    dummy = ListNode()
+    left = dummy
+    right = head
+
+    while > 0:
+        right = right.next 
+        n -= 1
+    
+    while right:
+        left = left.next
+        right = right.next
+    
+    left.next = left.next.next
+
+    return dummy.next
+```
+
+And that's it 😅
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+

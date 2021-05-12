@@ -1,0 +1,58 @@
+---
+title: "Leetcode - 143: Reorder List"
+summary: "Given a linked lists reorder lists into a different representation"
+publishedAt: "2021-05-12"
+tags: "Linked List, linked lists, programming, python, leetcode, leetcode 143, python3, dsa, algorithms, interview, coding"
+---
+
+## What's the question?
+
+Let me show it to you
+
+![Imgur](https://i.imgur.com/pGRPbFx.png)
+
+
+## How do we solve this?
+
+When reordering the list we can see one node is taken from start and anoter is taken from the end and the head is pointed to end and then end is pointing to one taken from start and these process is repeated until there are no nodes.
+
+To achieve this we can point a `node` to the `head` and push all the next nodes of `node` to a double ended queue or a <b>deque</b>. 
+
+We can iterate our the deque until if becomes empty and do a `pop` and `popleft` to take the last and first element in the queue and add the refernce of the last element to the current `head` and move the `head` and reference of the start to `head` node.
+
+## Let's code it out
+
+```dart:reorderList.py
+
+from collections import deque
+
+def reorderList(head):
+
+    if not head:
+        return
+    
+    q = deque()
+
+    node = head
+
+    while node.next:
+        node = node.next
+        q.append(node)
+    
+    while q:
+
+        if head:
+            temp = q.pop()
+            head.next = temp
+            head = head.next
+        
+        if head and q:
+            temp = q.popleft()
+            head.next = temp
+            head = head.next
+        
+    # point last head to None
+    head.next = None
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
