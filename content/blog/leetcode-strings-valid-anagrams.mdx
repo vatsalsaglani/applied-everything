@@ -1,0 +1,52 @@
+---
+title: "Leetcode - 242: Valid Anagram"
+summary: "Given two strigs if check if they are anagrams"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 242, programming, python, python3, strings, anagrams, coding, interview, dsa, algorithms"
+---
+
+## What's the question?
+
+<blockquote>
+  Given two strings s and t, return true if t is an anagram of s, and false
+  otherwise.
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+Input
+s = "anagram"
+t = "nagaram"
+Output
+True
+```
+
+## How do we solve this?
+
+For two strings to be anagrams of each other all the characters used in the first string should be used in the another string same number of times.
+
+We will count the number of characters used in both the strings if they are same we return `True` else we return `False`
+
+
+## Let's code it out
+
+```dart:anagram.py
+
+from collections import defaultdict
+
+def isAnagram(s, t):
+
+    start, target = defaultdict(int), defaultdict(int)
+
+    for c in s:
+        start[c] += 1
+    
+    for c in t:
+        target[c] += 1
+    
+    return True if start == target else False
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

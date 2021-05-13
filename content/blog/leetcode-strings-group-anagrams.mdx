@@ -1,0 +1,57 @@
+---
+title: "Leetcode - 49: Group Anagrams"
+summary: "Given a list of strings group anagrams into differnt lists and return a list of lists"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 49, strings, anagrams, group anagrams, programming, python, python3, coding, interview, dsa, algorithms"
+---
+
+## What's the question?
+
+<blockquote>
+  Given an array of strings strs, group the anagrams together. You can return
+  the answer in any order.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input:
+strs = ["eat","tea","tan","ate","nat","bat"]
+Output:
+[["bat"],["nat","tan"],["ate","eat","tea"]]
+```
+
+
+## How do we solve this?
+
+We loop through every string in the list and sort it i.e. `eat` becomes `aet` and also `ate` becomes `aet`. 
+
+We create a dictionary and add the current string to the sorted key and at the end we return all the values of the dictionary.
+
+## Let's code it out
+
+```dart:group_anagrams.py
+
+from collections import defaultdict
+
+def groupAnagrams(strs):
+
+    groups = defaultdict(list)
+
+    for st in strs:
+
+        # get the key anagram after sorting
+        # eg. sorted("eat") = "aet"
+        #     sorted("tea") = "aet" 
+        # for bot `aet` is the key
+
+        s = "".join(sorted(st))
+        groups[s].append(st)
+    
+    return [v for v in groups.values()]
+
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
