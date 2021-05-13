@@ -1,0 +1,98 @@
+---
+title: "Leetcode - 104: Maximum Depth of Binary Tree"
+summary: "Given a binary tree return it's maximum depth"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 104, binary tree, trees, maximum depth, programming, python, python3, coding, interview, dsa, algorithm"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the root of a binary tree, return its maximum depth.
+</blockquote>
+<blockquote>
+  A binary tree's maximum depth is the number of nodes along the longest path
+  from the root node down to the farthest leaf node.
+</blockquote>
+
+### Let's look at an example
+
+We are given the following tree we need to find the Maximum depth for this binary tree
+
+![Imgur](https://i.imgur.com/gTJO2GF.png)
+
+Here, the longest path from root to the farthest leaf node has `4` nodes therefore, the maximum depth will be `4`.
+
+## How do we solve this?
+
+Like every other tree problem here also we will use the <b>recursion</b>. 
+
+Let's see how it will work in few steps.
+
+For the tree given below let's recursively find the `maxDepth`. 
+
+![Imgur](https://i.imgur.com/KiLFKYp.png)
+
+To get the maximum depth of the tree from the root node we need to know the maximum depth of the left and right subtree and their left and right subtrees.
+
+So let's see what for what all subtree we need the max depth to reach at the max depth from the root
+
+![Imgur](https://i.imgur.com/JuU7Bvy.png)
+
+We need to find the max depth of three subtree, one on the left and two on the right.
+
+*So let's start with the one on the left (PART LEFT A)*
+
+![Imgur](https://i.imgur.com/Pxu1isU.png)
+
+There are no nodes after `4` and `5` in the left subtree. So we can say the node after `4` and `5` are `None` and if a node is `None` than the max depth becomes `0` because there is no node at all.
+
+So the max depth of `4` will be `max(0, 0) + 1` and max depth of `5` will be `max(0, 0) + 1`. 
+
+Now we have the max depth of `4` and `5` we can move upwards and get the max depth of `2` i.e. `max(1, 1) + 1 = 2`. And we have the max depth of the whole left subtree
+
+*Let's move to the right sub tree (PART RIGHT - B)*
+
+![Imgur](https://i.imgur.com/OnAdNba.png)
+
+Like nodes `4` and `5` the nodes `8` and `9` don't have any child nodes so we get max depth of `1` at both `8` and `9`. 
+
+To calculate the max depth at `7` we can do `max(1, 1) + 1 = 2` and the max depth at `7` will be `2`. 
+
+*Let's move to the PART RIGHT - A*
+
+![Imgur](https://i.imgur.com/c6Bkim4.png)
+
+Like nodes `4`, `5`, `8`, and `9` node `6` also doesn't have any left or right children so the max depth at `6` will be `1`. 
+
+We calcualted the max depth of `7` in our previous step and it is `2`
+
+Now we can calculate the max depth of node `3` i.e. `max(1, 2) + 1 = 3`.
+
+Now we have max depth of the left and right subtree of the root node. Now we can calculate the max depth of the root node.
+
+![Imgur](https://i.imgur.com/AD1ATHQ.png)
+
+To get the max depth of the root node we just have to use `max(2, 3) + 1 = 4`. So the max depth of the given binary tree is `4`.
+
+
+## Let's code out a solution
+
+```dart:max_depth.py
+
+def maxDepth(root):
+
+    if not root:
+        return 0
+    
+    left_depth = maxDepth(root.left)
+    right_depth = maxDepth(root.right)
+
+    return max(left_depth, right_depth) + 1
+
+```
+
+Apply this `maxDepth` function to the `root` node and you are done. Yeah in just <b>6</b> lines. 
+
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

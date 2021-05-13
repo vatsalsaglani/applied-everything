@@ -1,0 +1,87 @@
+---
+title: "Leetcode - 102: Binary Tree Level Order Traversal"
+summary: "Given root of the binary tree, perform a level order traversal and return the levels"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 102, trees, level order traversal, binary tree, python3, python, programming, coding, interviews, dsa, algorithm"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the root of a binary tree, return the level order traversal of its
+  nodes' values. (i.e., from left to right, level by level).
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+Input:
+root = [3, 9, 20, null, null, 15, 7]
+Output:
+[[3], [9, 20], [15, 7]]
+```
+
+## How do we solve this?
+
+A level order traversal in tree is similar to BFS in graphs. 
+
+We start at the root node and check it's left and right nodes. Add to the queue and then pop from the queue and get a node get it's left and right add to the queue and again pop from the queue and continue to do the same until the queue is empty.
+
+Let's do this process on an example
+
+#### Iteration 1:
+
+![Imgur](https://i.imgur.com/VJeOJDY.png)
+
+
+#### Iteration 2:
+
+![Imgur](https://i.imgur.com/LUSi6D5.png)
+
+
+#### Iteration 3:
+
+![Imgur](https://i.imgur.com/khATJvT.png)
+
+
+#### End
+
+![Imgur](https://i.imgur.com/MPqTxKg.png)
+
+
+
+## Let's code it out
+
+```dart:level_order_tree.py
+
+def levelOrder(root):
+
+    if not root:
+        return []
+    
+    traversal = []
+    queue = []
+    queue.append(root)
+
+    while queue:
+
+        lenloop = len(queue)
+        level = []
+
+        for i in range(lenloop):
+
+            node =queue.pop(0)
+
+            if node:
+                queue.append(node.left)
+                queue.append(node.right)
+                level.append(node.val)
+            
+        if level:
+            traversal.append(level)
+    
+    return traversal
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

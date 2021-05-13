@@ -1,0 +1,60 @@
+---
+title: "Leetcode - 124: Binary Tree Maximum Sum Path"
+summary: "Given a binary tree find the path with the maximum sum"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode - 124, binary tree, trees, max sum path, coding, interview, dsa, algorithm, python, python3, programming"
+---
+
+## What's the question?
+
+<blockquote>
+  A path in a binary tree is a sequence of nodes where each pair of adjacent
+  nodes in the sequence has an edge connecting them. A node can only appear in
+  the sequence at most once. Note that the path does not need to pass through
+  the root. The path sum of a path is the sum of the node's values in the path.
+  Given the root of a binary tree, return the maximum path sum of any path
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+Input:
+root = [1, 2, 3]
+Output: 6
+```
+
+Let's assume we are given the tree below with `n` as the main root node. Node `a` will be on the left and node `b` on the right. All these nodes together forms the binary tree.
+
+![Imgur](https://i.imgur.com/jKLi2Ct.png)
+
+
+Now, let's assume that the current max sum is value `v`. To get the maximum sum for this tree we need to add `n`, `a`, and `b`. But let's say if any of the values were negative then summing all the three wouldn't be a good choice to get the max.
+
+So, let's think of the solution in a recursive manner. We can pass our recursive function to every node and check the max of left and max of right subtree and than just add root with max of left and root with max of right and root with max of left and max of right and get the max of `current max, root + max of left, root + max of right, root, root + max of left  + max of right` and see the max value and update the `current max`.
+
+## Let's code out our solution
+
+```dart:max_path_sum.py
+
+def maxPathSum(root):
+
+    max_sum = root.val
+
+    def calculateMax(node):
+
+        if not node:
+            return 0
+        
+        left_max = calculateMax(node.left)
+        right_max = calculateMax(node.right)
+
+        max_sum = max(max_sum, node.val, node.val + left_max, node.val + right_max, node.val + left_max, node.val + right_max)
+
+        return max(node.val, node.val + left_max, node.val + right_max)
+    
+    calculateMax(root)
+
+    return max_sum
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
