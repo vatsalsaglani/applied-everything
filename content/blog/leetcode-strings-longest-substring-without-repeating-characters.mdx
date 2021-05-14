@@ -1,0 +1,80 @@
+---
+title: "Leetcode - 3: Longest Substring without Repeating Characters"
+summary: "Given a string return length of longest substring without character repetition"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 3, strings, longest substring, dsa, algorithm, coding, interview, python, python3, programming"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a string s, find the length of the longest substring without repeating
+  characters.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input
+s = "abcabcbb"
+Output: 3
+```
+
+## How do we solve this?
+
+Like every other string problem we use the sliding window approach and by initializing the `left_ptr` as `0` and go over the string with `right_ptr` as index of the loop. We add the character to a `set` and if we find a character being repeated we start removing characters from the left and shrink the window by increasing the `left_ptr`.
+
+After every iteration we update the `result` variable with `max(result, right_ptr - left_ptr + 1)`. 
+
+Our motive for the sliding window is to not have any repeating characters in our window. If we find any repeating characters we start shrinking our window by moving the `left_ptr` towards the right.
+
+*Let's see it in an example*
+
+We have the string <b>`abca`</b> and we need to find the longest non repeating substring
+
+#### Iteration 1:
+
+![Imgur](https://i.imgur.com/MFomAy1.png)
+
+
+#### Iteration 2:
+
+![Imgur](https://i.imgur.com/PZXMeOt.png)
+
+
+#### Iteration 3:
+
+![Imgur](https://i.imgur.com/0E9Dvl6.png)
+
+
+## Let's code it out
+
+```dart:length_of_longest_substring.py
+
+def lengthOfLongestSubstring(s):
+
+    characterSet = set()
+    result = 0
+    left_ptr = 0
+
+    for right_ptr in range(len(s)):
+
+        while s[right_ptr] in characterSet:
+
+            # shrink window size by deleting from left
+
+            characterSet.remove(s[left_ptr])
+            left_ptr += 1
+        
+        characterSet.add(s[right_ptr])
+
+        result = max(result, right_ptr - left_ptr + 1)
+    
+    return result
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+
+
