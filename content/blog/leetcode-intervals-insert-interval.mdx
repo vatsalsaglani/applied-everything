@@ -1,0 +1,111 @@
+---
+title: "Leetcode - 57: Insert Interval"
+summary: "Given an intervals list add/merge a new interval to the intervals list."
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 57, intervals, lists, python3, python, insert interval, programming, dsa, algorithm, coding, interviews"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a set of non-overlapping intervals, insert a new interval into the
+  intervals (merge if necessary). You may assume that the intervals were
+  initially sorted according to their start times.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input
+intervals = [[1, 3], [6, 9]]
+newInterval = [2, 5]
+Output
+[[1, 5], [6, 9]]
+```
+
+## How do we solve this?
+
+Let's put the intervals `[[1, 3], [6, 9]]` and newInterval `[2, 5]` on the number line and see how it all looks.
+
+![Imgur](https://i.imgur.com/jtFT8P3.png)
+
+We can see intervals `[1, 3]` and `[2, 5]` are overlapping and a new interval `[1, 5]` can replace them entirely.
+
+![Imgur](https://i.imgur.com/R5NQjMn.png)
+
+
+To do this in code, we can loop over the `intervals` list and check for if the `start` of interval at `ix` is in the intervals list is less than or equal to the `start` of the `newInterval`. If this condition is `True` than we just append the `interval` at index `ix` in the `intervals` list to the `newIntervals` list.
+
+![Imgur](https://i.imgur.com/QMgPjU5.png)
+
+
+If that's not the case than we know there is an overlap somewhere. So we take the `end` of the last interval in the `intervals` list and update it with end of the `newInterval` i.e. `newEnd` like this `max(end, newEnd)`.
+
+![Imgur](https://i.imgur.com/EEcjfz4.png)
+
+
+After doing this we will still have few intervals left in the `intervals` list which might be greater than the `newInterval`.
+
+So, we will loop over the remaining intervals and see their `start` and `end`. If the `start` is greater than the end of the last element in the `newIntervals` list we know there is no overlap and we can append the `[start, end]` to the `newIntervals` list.
+
+If the above condition doesn't hold we can need to update the end of the last interval in the `newIntervals` list like we did before.
+
+![Imgur](https://i.imgur.com/pWFI1qS.png)
+
+
+## Let's code it out
+
+```dart:insert_interval.py
+
+def insert(intervals, newIntervals):
+
+    if not intervals:
+
+        return [newInterval]
+    
+    newIntervals = []
+    newStart, newEnd = newInterval
+
+    loopN = len(intervals)
+    ix = 0
+
+    # adding original till newStart starts overlapping
+    while ix < loopN and intervals[ix][0] <= newStart:
+
+        newIntervals.append(intervals[ix])
+
+        ix += 1
+    
+    
+    # append or update interval with the new interval
+    if not newIntervals:
+        newIntervals.append(newInterval)
+    elif newIntervals[-1][1] < newStart:
+        # no overlap
+        newIntervals.append(newInterval)
+    else:
+        #  overlap
+        newIntervals[-1][1] = max(newIntervals[-1][1], newEnd)
+    
+    
+    # append or update remaining intervals
+    while ix < loopN:
+
+        newStart, newEnd = intervals[ix]
+
+        if newIntervals[-1][1] < newStart:
+            # no overlap
+            newIntervals.append([newStart, newEnd])
+        else:
+            # overlap
+            newIntervals[-1][1] = max(newIntervals[-1][1], maxEnd)
+        
+        ix += 1
+    
+    return newIntervals
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+
