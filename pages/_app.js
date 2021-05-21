@@ -18,20 +18,25 @@ const GlobalStyle = ({ children }) => {
           ::selection {
             background-color: #90cdf4;
             color: #fefefe;
+            
           }
           ::-moz-selection {
-            background: #ffb7b7;
+            background: #90cdf4;
             color: #fefefe;
+            
           }
           html {
-            min-width: 356px;
+            min-width: 100%;
             scroll-behavior: smooth;
+            overflow-x: hidden;
           }
-          #__next {
+          #__next { 
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            min-width: 100vw;
             background: ${colorMode === "light" ? "white" : "#12102c"};
+            overflow-x: hidden;
           }
         `}
       />
@@ -42,14 +47,14 @@ const GlobalStyle = ({ children }) => {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider resetCSS>
+    <ChakraProvider>
       <ColorModeProvider
         options={{
           initialColorMode: "light",
-          useSystemColorMode: true,
+          // useSystemColorMode: true,
         }}
       >
-        <GlobalStyle>
+        <GlobalStyle minWidth="100%">
           <Component {...pageProps} />
         </GlobalStyle>
       </ColorModeProvider>

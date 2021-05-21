@@ -68,13 +68,13 @@ const Container = ({ children }) => {
                 <DarkModeSwitch />
             </StickyNav > */}
             <Flex
-                as="main"
+                // as="main"
                 justifyContent="center"
                 flexDirection="column"
                 bg={bgColor[colorMode]}
                 color={color[colorMode]}
-                px={[0, 4, 4]}
-                mt={[4, 8, 8]}
+                // px={[0, 4, 4]}
+                // mt={[4, 8, 8]}
             >
                 {children}
             </Flex>

@@ -25,19 +25,20 @@ const Navigation = () => {
   };
 
   return (
-    <Box
+    <Container
       minWidth="100%"
       minHeight="10vh"
       display="flex"
       justifyContent="space-around"
       alignItems="space-around"
     >
-      <Box minWidth="100%">
-        <Box minWidth="100%">
+      <Container minWidth="100%">
+        <Container minWidth="100%">
           <Text
             fontWeight="bold"
             textAlign="justify"
-            fontSize="2xl"
+            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+            // fontSize="2xl"
             color={textColor[colorMode]}
             mt="35px"
             ml="25px"
@@ -63,8 +64,8 @@ const Navigation = () => {
               @saglanivatsal
             </ChakraLink>
           </Text>
-        </Box>
-      </Box>
+        </Container>
+      </Container>
       <Container
         display="flex"
         justifyContent="flex-end"
@@ -92,7 +93,7 @@ const Navigation = () => {
           />
         </Container>
       </Container>
-    </Box>
+    </Container>
   );
 };
 
