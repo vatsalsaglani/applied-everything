@@ -24,6 +24,11 @@ const Navigation = () => {
     light: "inset 15px 15px 30px #e6e6e6,inset -15px -15px 30px #ffffff;",
   };
 
+  const iconType = {
+    dark: <SunIcon />,
+    light: <MoonIcon />,
+  };
+
   return (
     <Container
       minWidth="100%"
@@ -80,7 +85,7 @@ const Navigation = () => {
         >
           <IconButton
             aria-label="icon"
-            icon={<SunIcon />}
+            icon={iconType[colorMode]}
             size="lg"
             mr="25px"
             mt="35px"
