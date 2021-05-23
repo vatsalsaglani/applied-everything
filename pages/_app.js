@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ChakraProvider,
   ColorModeProvider,
@@ -7,9 +7,22 @@ import {
 import customTheme from "../styles/theme";
 import { Global, css } from "@emotion/react";
 import { prismLightTheme, prismDarkTheme } from "../styles/prism";
+import { useRouter } from "next/router";
+
+import * as gtag from "../library/gtag";
 
 const GlobalStyle = ({ children }) => {
   const { colorMode } = useColorMode();
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
   return (
     <>
       <Global
@@ -18,19 +31,17 @@ const GlobalStyle = ({ children }) => {
           ::selection {
             background-color: #90cdf4;
             color: #fefefe;
-            
           }
           ::-moz-selection {
             background: #90cdf4;
             color: #fefefe;
-            
           }
           html {
             min-width: 100%;
             scroll-behavior: smooth;
             overflow-x: hidden;
           }
-          #__next { 
+          #__next {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
