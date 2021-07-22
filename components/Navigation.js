@@ -8,6 +8,9 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { AnimationWrapper } from "react-hover-animation";
+
+import Link from "next/link";
 
 const Navigation = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -39,18 +42,22 @@ const Navigation = () => {
     >
       <Container minWidth="100%">
         <Container minWidth="100%">
-          <Text
-            fontWeight="bold"
-            textAlign="justify"
-            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
-            // fontSize="2xl"
-            color={textColor[colorMode]}
-            mt="35px"
-            ml="25px"
-            mb="5px"
-          >
-            {"<AppliedEverything />"}
-          </Text>
+          <Link href="/">
+            <a>
+              <Text
+                fontWeight="bold"
+                textAlign="justify"
+                fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+                // fontSize="2xl"
+                color={textColor[colorMode]}
+                mt="35px"
+                ml="25px"
+                mb="5px"
+              >
+                {"<AppliedEverything />"}
+              </Text>
+            </a>
+          </Link>
           <Text
             ml="25px"
             fontSize="md"
@@ -77,26 +84,28 @@ const Navigation = () => {
         alignItems="center"
         flexDirection="row"
       >
-        <Container
-          display="flex"
-          flexDirection="column-reverse"
-          alignItems="flex-end"
-          justifyContent="center"
-        >
-          <IconButton
-            aria-label="icon"
-            icon={iconType[colorMode]}
-            size="lg"
-            mr="25px"
-            mt="35px"
-            mb="20px"
-            isRound
-            variant="ghost"
-            fontWeight="bold"
-            color={iconColor[colorMode]}
-            onClick={toggleColorMode}
-          />
-        </Container>
+        <AnimationWrapper>
+          <Container
+            display="flex"
+            flexDirection="column-reverse"
+            alignItems="flex-end"
+            justifyContent="center"
+          >
+            <IconButton
+              aria-label="icon"
+              icon={iconType[colorMode]}
+              size="lg"
+              mr="25px"
+              mt="35px"
+              mb="20px"
+              isRound
+              variant="ghost"
+              fontWeight="bold"
+              color={iconColor[colorMode]}
+              onClick={toggleColorMode}
+            />
+          </Container>
+        </AnimationWrapper>
       </Container>
     </Container>
   );

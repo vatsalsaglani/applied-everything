@@ -27,6 +27,8 @@ import { ListTags } from "../components/ListBlogs";
 
 import { NextSeo } from "next-seo";
 
+import { AnimationWrapper } from "react-hover-animation";
+
 export default function BlogLayout({ children, frontMatter }) {
   const { colorMode } = useColorMode();
   // console.log("Matter: ", frontMatter);
@@ -91,17 +93,19 @@ export default function BlogLayout({ children, frontMatter }) {
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <IconButton
-              // aria-label="Toggle dark mode"
-              icon={<ArrowBackIcon />}
-              onClick={goBack}
-              color={iconColor[colorMode]}
-              //   mr={2}
-              variant="ghost"
-              size="lg"
-              mb={2}
-              isRound
-            />
+            <AnimationWrapper>
+              <IconButton
+                // aria-label="Toggle dark mode"
+                icon={<ArrowBackIcon />}
+                onClick={goBack}
+                color={iconColor[colorMode]}
+                //   mr={2}
+                variant="ghost"
+                size="lg"
+                mb={2}
+                isRound
+              />
+            </AnimationWrapper>
             <Heading letterSpacing="tight" mb={2} as="h1" size="xl">
               {frontMatter.title}
             </Heading>
@@ -113,9 +117,14 @@ export default function BlogLayout({ children, frontMatter }) {
             </Text>
           </Container>
 
-          <Container >
+          <Container>
             <Center>
-              <Image borderRadius="sm" my="19px" objectFit="cover" src={frontMatter.cover_image} />
+              <Image
+                borderRadius="sm"
+                my="19px"
+                objectFit="cover"
+                src={frontMatter.cover_image}
+              />
             </Center>
           </Container>
 
