@@ -114,7 +114,7 @@ const Hr = () => {
 };
 
 const Caption = () => {
-//   const { colorMode } = useColorMode();
+  //   const { colorMode } = useColorMode();
 
   return <TableCaption />;
 };
@@ -128,6 +128,7 @@ const MDXComponents = {
   h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
   inlineCode: (props) => (
     <Code colorScheme="yellow" fontSize="0.84em" {...props} />
+    // <CopyBlock language="python" theme="dracula" {...props} />
   ),
   br: (props) => <Box height="24px" {...props} />,
   hr: Hr,
@@ -137,7 +138,7 @@ const MDXComponents = {
   ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
-//   em: Caption
+  //   em: Caption
   em: (props) => <DocsHeading as="i" size="xs" {...props} />,
 };
 
