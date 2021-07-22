@@ -46,7 +46,7 @@ const GlobalStyle = ({ children }) => {
             flex-direction: column;
             min-height: 100vh;
             min-width: 100vw;
-            background: ${colorMode === "light" ? "white" : "#12102c"};
+            background: ${colorMode === "light" ? "white" : "#1A212C"};
             overflow-x: hidden;
           }
         `}

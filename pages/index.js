@@ -39,7 +39,7 @@ export default function Home({ posts }) {
 
   const background = {
     light: "while",
-    dark: "#12102c",
+    dark: "#1A212C",
   };
 
   return (
