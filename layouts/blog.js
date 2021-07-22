@@ -12,6 +12,8 @@ import {
   SimpleGrid,
   Box,
   Divider,
+  Center,
+  Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { SunIcon, MoonIcon, ArrowBackIcon } from "@chakra-ui/icons";
@@ -105,6 +107,18 @@ export default function BlogLayout({ children, frontMatter }) {
             </Heading>
           </Box>
 
+          <Container>
+            <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
+              {frontMatter.readingTime.text}
+            </Text>
+          </Container>
+
+          <Container >
+            <Center>
+              <Image borderRadius="sm" my="19px" objectFit="cover" src={frontMatter.cover_image} />
+            </Center>
+          </Container>
+
           <Flex
             justify="space-between"
             align={["initial", "center"]}
@@ -112,11 +126,7 @@ export default function BlogLayout({ children, frontMatter }) {
             mt={2}
             w="100%"
             mb={10}
-          >
-            <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {frontMatter.readingTime.text}
-            </Text>
-          </Flex>
+          ></Flex>
         </Flex>
         {children}
         <Divider
