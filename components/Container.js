@@ -15,7 +15,7 @@ const Container = ({ children }) => {
 
     const bgColor = {
         light: 'whiteAlpha.400',
-        dark: '#12102c'
+        dark: '#1A212C'
     }
 
     const color = {
