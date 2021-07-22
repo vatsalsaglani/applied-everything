@@ -16,8 +16,8 @@ const Navigation = () => {
     dark: "white",
   };
   const iconColor = {
-    light: "black",
-    dark: "white",
+    light: "gray.600",
+    dark: "yellow.600",
   };
   const boxShadow = {
     dark: "inset 18px 18px 29px #100e25,inset -18px -18px 29px #161233",
