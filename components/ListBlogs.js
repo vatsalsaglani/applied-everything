@@ -68,7 +68,7 @@ const RenderBlogCard = ({
               mb={6}
               pos={"relative"}
             >
-              <Image src={cover_image} layout={"cover"} />
+              {/* <Image src={cover_image} layout={"cover"} /> */}
             </Box>
             <Stack>
               <Text
@@ -132,80 +132,6 @@ const ListBlogs = ({
       reading_time={reading_time}
       tags={tags}
     />
-    // <Container
-    //   mt="50px"
-    //   mb="15px"
-    //   // boxShadow="inset -30px -30px 29px #110e27,             inset 30px 30px 29px #151231;"
-    //   borderRadius="21px"
-    //   display="flex"
-    //   flexDirection="column"
-    //   alignItems="space-around"
-    //   justifyContent="center"
-    //   border={`2px solid ${borderColor[colorMode]}`}
-    //   minWidth="100%"
-    // >
-    //   <Box>
-    //     <Link href={`/blog/${slug}`}>
-    //       <a>
-    //         <Text
-    //           fontWeight="bold"
-    //           textAlign="justify"
-    //           color={textColor[colorMode]}
-    //           fontSize="xl"
-    //           letterSpacing="wide"
-    //           mt="15px"
-    //           mb="1px"
-    //           ml="4px"
-    //         >
-    //           {/* Title for the Blog */}
-    //           {title}
-    //         </Text>
-    //       </a>
-    //     </Link>
-    //   </Box>
-    //   <Box>
-    //     <Text
-    //       fontWeight="bold"
-    //       textAlign="justify"
-    //       fontSize="md"
-    //       color={textColor[colorMode]}
-    //       ml="4px"
-    //       mb="3px"
-    //     >
-    //       {/* Check out this */}
-    //       {summary}
-    //     </Text>
-    //   </Box>
-    //   <Box
-    //     display="flex"
-    //     alignItems="flex-start"
-    //     justifyContent="space-between"
-    //     flexDirection="column"
-    //   >
-    //     <Text
-    //       fontWeight="bold"
-    //       textAlign="justify"
-    //       fontSize="sm"
-    //       color="cyan.900"
-    //       ml="2px"
-    //       mb="15px"
-    //     >
-    //       {reading_time["text"]}
-    //     </Text>
-    //     {/* <SimpleGrid
-    //       columns={4}
-    //       spacingX={2}
-    //       spacingY={2}
-    //       minChildWidth="80px"
-    //       mt="9px"
-    //       mb="10px"
-    //       minWidth="100%"
-    //       overflow="visible"
-    //     >
-    //       <ListTags tags={tags} />
-    //     </SimpleGrid> */}
-    //   </Box>
-    // </Container>
   );
 };
 
