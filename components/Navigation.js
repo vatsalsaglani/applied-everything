@@ -34,7 +34,7 @@ const Navigation = () => {
 
   return (
     <Container
-      minWidth="100%"
+      minWidth="70%"
       minHeight="10vh"
       display="flex"
       justifyContent="space-around"
