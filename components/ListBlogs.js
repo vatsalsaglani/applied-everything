@@ -23,18 +23,25 @@ export const ListTags = ({ tags }) => {
 
   return tagList.map((value, index) => {
     return (
-      <Tag
-        variant="solid"
-        rounded="lg"
-        fontWeight="bold"
-        textAlign="center"
-        fontSize="sm"
-        color="whiteAlpha.900"
-        backgroundColor="facebook.500"
-        key={index}
-      >
-        {value}
-      </Tag>
+      <Box backgroundColor="facebook.500" borderRadius="md" px="2px" py="5px">
+        <Center>
+          <Text color="white" fontWeight="bold" fontSize="sm">
+            {value}
+          </Text>
+        </Center>
+      </Box>
+      // <Tag
+      //   variant="solid"
+      //   rounded="lg"
+      //   fontWeight="bold"
+      //   textAlign="center"
+      //   fontSize="sm"
+      //   color="whiteAlpha.900"
+      //   backgroundColor="facebook.500"
+      //   key={index}
+      // >
+      //   <Center>{value}</Center>
+      // </Tag>
     );
   });
 };
@@ -120,7 +127,7 @@ const ListBlogs = ({
     light: "black",
   };
 
-  console.log(title, tags, summary, slug, reading_time, cover_image);
+  // console.log(title, tags, summary, slug, reading_time, cover_image);
 
   return (
     // <NextLink href={`/blog/${slug}`} passHref>
