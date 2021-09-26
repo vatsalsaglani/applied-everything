@@ -69,6 +69,20 @@ export default function BlogLayout({ children, frontMatter }) {
           cardType: "summary_large",
         }}
       />
+      <Container width={"50%"}>
+        <Navigation />
+      </Container>
+      <Container>
+        <Center>
+          <Image
+            borderRadius="sm"
+            // my="10px"
+            objectFit="contain"
+            src={frontMatter.cover_image}
+            minHeight="90vh"
+          />
+        </Center>
+      </Container>
       <Stack
         as="article"
         spacing={8}
@@ -79,7 +93,6 @@ export default function BlogLayout({ children, frontMatter }) {
         w="100%"
         px={2}
       >
-        <Navigation />
         <Flex
           flexDirection="column"
           justifyContent="flex-start"
@@ -117,17 +130,6 @@ export default function BlogLayout({ children, frontMatter }) {
             </Text>
           </Container>
 
-          <Container>
-            <Center>
-              <Image
-                borderRadius="sm"
-                my="19px"
-                objectFit="cover"
-                src={frontMatter.cover_image}
-              />
-            </Center>
-          </Container>
-
           <Flex
             justify="space-between"
             align={["initial", "center"]}
@@ -147,11 +149,12 @@ export default function BlogLayout({ children, frontMatter }) {
           <SimpleGrid
             columns={5}
             spacingX={1}
-            spacingY={1}
+            spacingY={2}
             mt="9px"
             mb="10px"
             minWidth="100%"
             overflow="visible"
+            minChildWidth="100px"
           >
             <ListTags tags={frontMatter.tags} />
           </SimpleGrid>
