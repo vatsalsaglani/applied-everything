@@ -1,0 +1,53 @@
+---
+title: "Leetcode - 235: Lowest Common Ancestor of a Binary Search Tree"
+summary: "Given a binary search tree and two nodes p and q return the LCA for p and q"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 235, programming, python, python3, trees, binary tree, bst, binary search tree, interviews, coding"
+cover_image: "https://i.imgur.com/Z0cCdfg.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a binary search tree (BST), find the lowest common ancestor (LCA) of two
+  given nodes in the BST.
+</blockquote>
+
+### What is LCA?
+<blockquote>
+  According to the definition of LCA on Wikipedia: “The lowest common ancestor
+  is defined between two nodes p and q as the lowest node in T that has both p
+  and q as descendants (where we allow a node to be a descendant of itself).”
+</blockquote>
+
+
+## How do we solve this?
+
+As we know that the node in the left of root is has lower value than the root node and node in the right has a value higher than the root node.
+
+We are already given two variable `p` and `q` for which we need to find the LCA. 
+
+For example our root node is `10` and the `p` and `q` are `2` and `6` respectively then we just need to traverse the left sub tree and get the LCA for the given `p` and `q`.
+
+Now suppose the value of the root node remains same but, `p` is changed to `12` and `q` is changed to `14`. Now we can see both the values are higher than the root node value and we need to find the LCS in the right subtree.
+
+If these two conditions don't hold true than we say that we have reached the leaf nodes and the current root is the least common ancestor.
+
+One more thing which can hold true is out of `p` and `q` one is the root itself and according to the defination of LCA a root can be a descendant of itself.
+
+## Let's code it out
+
+```dart:lowest_common_ancestor.py
+
+def lowestCommonAncestor(root, p, q):
+
+    if p.val < root.val and q.val < root.val:
+        return lowestCommonAncestor(root.left, p, q)
+    elif p.val > root.val and q.val > root.val:
+        return lowestCommonAncestor(root.right, p, q)
+    else:
+        return root
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

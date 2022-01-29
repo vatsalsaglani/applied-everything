@@ -1,0 +1,46 @@
+---
+title: "Leetcode - 125: Valid Palindrome"
+summary: "Given a string verify if it's a palindrome"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode - 125, palindrome, strings, python, python3, programming, interview, questions, dsa, algorithm"
+cover_image: "https://i.imgur.com/JQYWvlS.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a string s, determine if it is a palindrome, considering only
+  alphanumeric characters and ignoring cases.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input
+s = "A man, a plan, a canal: Panama"
+Output
+True
+```
+
+
+## How do we solve this?
+
+For a string to be a palindrome the reverse of the string must be the same string i.e. `aba` is a palindrome because the reverse is also `aba`.
+
+It's the same thing her we don't need to consider spaces and special characters while checking if a string is a palindrome or not.
+
+
+## Let's code it out
+
+```dart:palindrome.py
+
+def isPalindrome(s):
+
+    s = [c for c in s.lower() if c.isalnum()]
+
+    return True if s == s[::-1] else False
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

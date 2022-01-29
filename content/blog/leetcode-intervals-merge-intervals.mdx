@@ -1,0 +1,80 @@
+---
+title: "Leetcode - 56: Merge Intervals"
+summary: "Given a list of intervals merge overlapping intervals and return a list of all non-overlapping intervals"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 56, merge intervals, lists, intervals, python, python3, programming, interview, coding, algorithm, dsa"
+cover_image: "https://i.imgur.com/4jbfNT7.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given an array of intervals where intervals[i] = [starti, endi], merge all
+  overlapping intervals, and return an array of the non-overlapping intervals
+  that cover all the intervals in the input.
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+
+Input
+intervals = [[1, 3], [2, 6], [8, 10], [15, 18]]
+
+Output:
+[[1,6], [8,10], [15, 18]]
+
+```
+
+## How do we solve this?
+
+Let's put the intervals `[[1, 3], [2, 6], [8, 10], [15, 18]]` on the number line.
+
+![Imgur](https://i.imgur.com/mFsX9pj.png)
+
+
+Here, we can see interval `[1, 3]` and `[2, 6]` are overlapping and we can convert them to `[1, 6]`.
+
+![Imgur](https://i.imgur.com/EwsdqAB.png)
+
+There are no other intervals which are overlapping.
+
+
+Here, we aren't told to assume that the intervals are in sorted order. 
+So the first thing we would be required to do is to sort the `intervals` list with the 0<sup>th</sup> of every interval in the list.
+
+We initialize `output` list to store the new intervalse. We add the first interval from the `intervals` list to the `output` list.
+
+We loop over the `intervals` list starting at index `1`. 
+
+For any given interval at index `i` in the intervals list we check if the `start` of that interval is less than or equal to the `end` of the last interval in the `outputs` list. If this holds `True` we update the `end` of the last interval in the `outputs` list.
+
+If the above condition doesn't hold `True` we have established for the interval at index `i` in the intervals list there is no overlap with the last interval in the `outputs` list. We can then just append the interval at index `i` in the interval list to the `outputs` list.
+
+
+## Let's code it out
+
+```dart:merge_intervals.py
+
+def mergeIntervals(intervals):
+
+    intervals.sort(key = lambda x: x[0])
+
+    outputs = [intervals[0]]
+
+    for start, end in intervals[1:]:
+
+        if start <= outputs[-1][1]:
+
+            # overlap
+            outputs[-1][1] = max(outputs[-1][1], end)
+        
+        else:
+
+            outputs.append([start, end])
+        
+    return outputs
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

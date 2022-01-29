@@ -1,0 +1,71 @@
+---
+title: "Leetcode - 230: Kth Smallest Element in a BST"
+summary: "Given a Binary search tree find the kth smallest element/number in the tree"
+publishedAt: "2021-05-12"
+tags: "Leetcode, Kth Smallest Element, leetcode 230, programming, python, python3, trees, binary search tree, coding, interviews, dsa, algorithms"
+cover_image: "https://i.imgur.com/7QlnSqZ.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the root of a binary search tree, and an integer k, return the kth
+  (1-indexed) smallest element in the tree.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+Input:
+root = [3, 1, 4, null, 2] 
+k = 1
+Output: 1
+```
+
+## How do we solve this?
+
+As a condition for a tree to be reffered as a Binary Search Tree (BST) the value of the left subtree node must be less than the value of the root node and the value of the right node must be higher than the root node.
+
+So we can start with the <b>in-order traversal</b> to traverse from `left - root- right`.
+
+![Imgur](https://i.imgur.com/FZFOSub.png)
+
+We move down the last left node in the left subtree
+
+![Imgur](https://i.imgur.com/9npmdtg.png)
+
+Add it to our current list and increase our counter `n` by `1` and check if `n == k`. If that condition satisfies we return the value of the node.
+
+If not we move `current` to `current.right` and do the same process.
+
+## Let's code it out
+
+```dart:kth_smallest_bst.py
+
+def kthSmallest(root, k):
+    # iterative in-order traversal
+    n = 0
+    stack = []
+    current = root
+
+    while current or stack:
+
+        while current:
+
+            stack.append(current)
+            current = current.left
+        
+        current = stack.pop()
+
+        n += 1
+        
+        if n == k:
+        
+            return current.val
+        
+        current = current.right
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

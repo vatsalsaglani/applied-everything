@@ -1,0 +1,88 @@
+---
+title: "Leetcode - 141: Linked List Cycle"
+summary: "Given a head node of linked list check if a cycle is present in the list"
+publishedAt: "2021-05-11"
+tags: "linked lists, ll, dsa, algorithm, leetcode, 141, coding, interviews"
+cover_image: "https://i.imgur.com/7d17CDy.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given head, the head of a linked list, determine if the linked list has a
+  cycle in it. There is a cycle in a linked list if there is some node in the
+  list that can be reached again by continuously following the next pointer.
+  Internally, pos is used to denote the index of the node that tail's next
+  pointer is connected to. Note that pos is not passed as a parameter. Return
+  true if there is a cycle in the linked list. Otherwise, return false.
+</blockquote>
+
+
+### Let's see an example
+
+If we have the linked list as below, we can say it has a cycle link in it from `2` to `3` and from `3` back to `2`.
+
+![Imgur](https://i.imgur.com/zam4d3d.png)
+
+## How do we solve this?
+
+There are two ways to solve this problem. 
+
+The <b>first</b> way involves keeping track of all the nodes which are visited by using a set and adding nodes once visited. If a node is already in the set and is again visited we can return `True`.
+
+Using the first approach requires us to use extra memory but as part of the follow-up question we are asked to keep the memory complexity to <b>O(1)</b>. Which means to use constant memory.
+
+To achive this we can need to figure out another way. So while traveling through the nodes we an mark the node's value with something and if we go forward and see a need has the same marked value we can see that we came back to a previously marked node via. a cycle and therefore there exists a cycle in the linked list. 
+
+Let's have a closer look at this second approach and let's say we mark every visited node with value <b>"t"</b>.
+
+
+#### Iteration 1
+![Imgur](https://i.imgur.com/Hano1Vw.png)
+
+#### Iteration 2
+![Imgur](https://i.imgur.com/Nd2tc4L.png)
+
+#### Iteration 3
+![Imgur](https://i.imgur.com/hcrhpQU.png)
+
+#### Iteration 4
+![Imgur](https://i.imgur.com/ESwmGyr.png)
+
+In <i>Iteration - 4</i> we come back to a marked node so we return `True`.
+
+## Let's code it
+
+```dart:hasCycle_1.py
+
+def hasCycle(head):
+    
+    visited = set()
+    while head:
+        if not head in visited:
+            visited.add(head)
+        else:
+            return True
+        head = head.next
+    
+    return False
+```
+
+```dart:hasCycle_2.py
+
+def hasCycleO1(head):
+
+    while head and head.next:
+
+        if head.val == "t":
+            return True
+        
+        head.val = "t"
+        head = head.next
+    
+    return False
+```
+
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+

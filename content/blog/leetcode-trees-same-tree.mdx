@@ -1,0 +1,58 @@
+---
+title: "Leetcode - 100: Same Tree"
+summary: "Given two tree return if they are same or not"
+publishedAt: "2021-05-12"
+tags: "leetcode, leetcode 100, python, python3, programming, dsa, algorithm, interview, coding, tree, binary tree, same tree"
+cover_image: "https://i.imgur.com/QMAWuqK.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the roots of two binary trees p and q, write a function to check if they
+  are the same or not.
+</blockquote>
+<blockquote>
+  Two binary trees are considered the same if they are structurally identical,
+  and the nodes have the same value.
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+Input:
+p = [1, 2, 3]
+q = [1, 2, 3]
+Output: 
+True
+```
+
+## How do we solve this?
+
+As mentioned in the question for two trees to be same they must be structurally identically and the values in the nodes must be same. 
+
+So the codition is <i>value of p equal to value of q and left subtree of p equal to left subtree of q and right subtree of p equal to right subtree of q</i>
+
+So what are our base cases.
+
+1. If there is no `p` and no `q` we say `None` = `None` i.e. `True`.
+2. If `p` is there and `q` is not there or vice verca it will be obviously `False`.
+
+We can recursively check this by applying the conditions to the root node and the left subtree and right subtree recursively.
+
+## Let's code it out
+
+```dart:same_tree.py
+
+def sameTree(p, q):
+
+    if not p and not q:
+        return True
+    elif not p or not q:
+        return False
+    else:
+        return p.val == q.val and sameTree(p.left, q.left) and sameTree(p.right, q.right)
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>

@@ -1,0 +1,86 @@
+---
+title: "Leetcode - 5: Longest Palindromic Substring"
+summary: "Given a string return the longest palindrome which can be formed from the string as substring"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 5, python, python3, strings, palindrome, longest substring, programming, dsa, algorithm, interview, coding"
+cover_image: "https://i.imgur.com/TzKrBP4.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a string s, return the longest palindromic substring in s.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+
+Input
+s = "babad"
+Output
+"bab" or "abd"
+
+```
+
+## How do we solve this?
+
+This question is similar to the <a target="_blank" href="/blog/leetcode-strings-count-palendromic-substrings">Count Palindromic Substrings</a> question. In that question we have to keep a count of the palindromic substrings which can be formed from the given string.
+
+Here, we need to store the max length palindromic substring which can be formed from the given string to return it.
+
+So the `count` variable will be replaced by two variables `res` to store the max length substring and `resLen` to store the max lenght of the current palindromic substring. Using `resLen` we will compare the substring length while looping over the given string.
+
+If the current lenght of the substring is higher than the `resLen` we will update our `resLen` and also update our `res`.
+
+
+
+## Let's code it out
+
+```dart:longest_palindrome.py
+
+def longestPalindrome(s):
+
+    res, resLen = "", 0
+
+    for i in range(len(s)):
+
+
+        # odd length Substrings
+        # eg. "bab"
+        l, r = i, i
+
+        while 0 <= l < len(s) and 0 <= r < len(s) and s[l] == s[r]:
+
+            if (r - l + 1) > resLen:
+
+                res = s[l:r+1]
+                resLen = r - l + 1
+            
+            l -= 1
+            r += 1
+        
+
+        # even length substrings
+        # eg. "baab"
+
+        l, r = i, i + 1
+
+        while 0 <= l < len(s) and 0 <= r < len(s) and s[l] == s[r]:
+
+            if (r - l + 1) > resLen:
+
+                res = s[l:r+1]
+                resLen = r - l + 1
+            
+            l -= 1
+            r += 1
+
+    return res
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+
+

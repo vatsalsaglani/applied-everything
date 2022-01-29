@@ -1,0 +1,64 @@
+---
+title: "Leetcode - 20: Valid Parentheses"
+summary: "Given a string of parentheses verify their validity"
+publishedAt: "2021-05-13"
+tags: "leetcode, leetcode 20, strings, valid parentheses, python, python3, programming, dsa, algorithms, coding, interviews"
+cover_image: "https://i.imgur.com/sCv2JRR.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a string s containing just the characters '(', ')', '{", "}', '[' and
+  ']', determine if the input string is valid.
+</blockquote>
+
+### Let's see an example
+
+The opening and closing brackets must be same and brackets must be closed in the same order
+
+```dart:example
+s = "()"
+True
+
+s = "()[}]"
+False
+```
+
+
+## How do we solve this?
+
+We can have a bracket mapping dictionary to map opening and closing brackets.
+
+As we move along the string we can push the bracket to the stack if it's an opening bracket.
+
+Else if we encounter a closing bracket we check if the stack for it's opening pair at the top of the stack and if it's there we move one or else we return a `False`
+
+## Let's code it out
+
+```dart:valid_parentheses.py
+
+def isValid(s):
+
+    bracketMapping = {
+        "{": "}",
+        "(": ")",
+        "[": "]",
+    }
+
+    bracketStack = []
+
+    for bracket in s:
+
+        if bracket in bracketMapping:
+
+            bracketStack.append(bracket)
+
+        else:
+
+            if not bracketStack or bracketMapping[bracketStack.pop()] == bracket:
+                return False
+    
+    return len(bracketStack) == 0
+
+```

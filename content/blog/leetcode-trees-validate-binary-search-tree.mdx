@@ -1,0 +1,54 @@
+---
+title: "Leetcode - 98: Validate Binary Search Tree"
+summary: "Given a BST, determine if it's valid or not"
+publishedAt: "2021-05-12"
+tags: "bst, leetcode, leetcode 98, binary search tree, dsa, algorithms, python, python3, programming, coding, interview, trees"
+cover_image: "https://i.imgur.com/7v39sLa.png"
+---
+
+## What's the question?
+
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+- The left subtree of a node contains only nodes with keys less than the node's key.
+- The right subtree of a node contains only nodes with keys greater than the node's key.
+- Both the left and right subtrees must also be binary search trees.
+
+### Let's see an example
+
+```dart:example
+root = [2, 1, 3]
+
+Output: True
+```
+
+## How do we solve this?
+
+For a tree to be considered as a binary search tree (BST) the value of the left node must be less than the value of the root node and the value of the right node must be greater than the value of the root node.
+
+So for every left subtree we need to check `-infinity < left.val < root.val` and for 
+right subtree we need to check `root.val < right.val < infinity`. 
+
+We need to travel to the end of the tree and if the node is `None` we will return `True`
+
+## Let's code it out
+
+```dart:valid_bst.py
+
+def isValidBST(root):
+
+    def validate(node, left, right):
+
+        if not node: return True
+
+        if not (node.val < right and node.val > left): return False
+
+        return (validate(node.left, left, node.val) and validate(node.right, node.val, right))
+
+    return validate(root, float("-inf"), float("inf"))
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>

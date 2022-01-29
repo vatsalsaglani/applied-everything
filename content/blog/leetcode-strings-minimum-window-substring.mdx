@@ -1,0 +1,106 @@
+---
+title: "Leetcode - 76: Minimum Window Substring"
+summary: "Given two string s and t return minimum spanning window in s where all the words in t are available"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 76, substring, strings, python, python3, dsa, algorithms, coding, programming, interview"
+cover_image: "https://i.imgur.com/Ve2vd26.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given two strings s and t of lengths m and n respectively, return the minimum
+  window in s which will contain all the characters in t. If there is no such
+  window in s that covers all characters in t, return the empty string "".
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+
+Input
+s = "ADOBECODEBANC"
+t = "ABC"
+
+Output: "BANC"
+
+```
+
+## How do we solve this?
+
+Like every other string and substring question this question also will be solved using a sliding window approach and anyone can guess it, it's given in the title itself.
+
+So how do we apply a sliding window technique to this question.
+
+Let's talk about all our initial variables first. We will have a `res` and `resLen` variable. 
+The `res` variable will be a `list` which will store the start and end index of the substring of minimum length.
+`resLen` will store the lenght of the substring in `res`.
+
+Given the target `t` we will count the number of characters in string `t` and store it as a dictionary under variable `countT`.
+
+Similarly, while looping over the string we will have one more dictionary variable to store the occurrences of strings travelled in the loop which will be `window`.
+
+We will have two more variable `have` and `need`. 
+`have` will store how many characters do we have in our window which are required to form the target `t`. 
+`need` is the number of characters in target or simply the length of `countT`.
+
+We will loop over the given string and starting add all the occurrences of a character to the window variable until we have `have == need`. Once we get `have == need` we can start shrinking the window from the left.
+
+When `have == need` condition is satisfied we update our `res` and `resLen` variables with the appropriate values.
+
+While shrinking the window from the left if we remove any character which is required to form the target string `t` and `window[character] < countT[character]`, we would need to continue the upper for loop till `have == need`. We continue this till we loop to the end of the string.
+
+## Let's code it out
+
+```dart:min_window.py
+
+def minWindow(s, t):
+
+    if t == "": return ""
+
+    countT, window = {}, {}
+
+    for c in t:
+        countT[c] = 1 + countT.get(c, 0)
+    
+    have, need = 0, len(countT)
+
+    res, resLen = [-1, -1], float("infinity")
+
+    left = 0
+
+    for right in range(len(s)):
+
+        current = s[right]
+
+        # update occurrence of current character in window dictionary
+
+        window[current] = 1 + window.get(current, 0)
+
+        if current in countT and countT[current] == window[current]:
+            have += 1
+        
+        while have == need:
+
+            if (right - left + 1) < resLen:
+
+                res = [left, right]
+                resLen = right - left + 1
+            
+            ## shrink window from left`
+
+            window[s[left]] -= 1
+
+            if s[left] in countT and window[s[left]] < countT[s[left]]:
+
+                have -= 1
+            
+            left += 1
+        
+    left, right = res
+
+    return s[left:right+1] if not resLen == float("infinity") else ""
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

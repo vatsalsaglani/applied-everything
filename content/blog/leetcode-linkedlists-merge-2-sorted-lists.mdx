@@ -1,0 +1,83 @@
+---
+title: "Leetcode - 21: Merge Two Sorted Lists"
+summary: "Given two sorted linked lists return single sorted linked list using both of them"
+publishedAt: "2021-05-12"
+tags: "leetcode, linked lists, 2 sorted linked lists, leetcode 21, dsa, algorithm, coding, interview, python, programming, python3"
+cover_image: "https://i.imgur.com/0v5SOVu.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Merge two sorted linked lists and return it as a sorted list. The list should
+  be made by splicing together the nodes of the first two lists.
+</blockquote>
+
+### Let's look at an example
+
+```dart:example
+l1 = [1, 2, 4]
+l2 = [3, 4]
+
+output: [1, 2, 3, 4, 4]
+```
+
+
+## How do we solve this?
+
+We will traverse the lists at the same time and create a `dummy` and keep on adding pointer reference to the dummy node as we travel through both the lists based on the values of the nodes.
+
+Let's see it here,
+
+#### Iteration: 1
+ 
+![Imgur](https://i.imgur.com/tGzTwhv.png)
+
+
+#### Iteration: 2
+
+![Imgur](https://i.imgur.com/g1jHzvy.png)
+
+
+#### Iteration: 3
+
+![Imgur](https://i.imgur.com/VTFEVQY.png)
+
+
+#### Iteration: 4
+
+![Imgur](https://i.imgur.com/wTaodgL.png)
+
+
+#### End
+
+[Imgur](https://i.imgur.com/JmOyc4d.png)
+
+
+## Let's code it out
+
+```dart:mergeTwoLists.py
+def mergeTwoLists(l1, l2):
+
+    dummy = ListNode()
+    tail = dummy
+
+    while l1 and l2:
+
+        if l1.val < l2.val:
+            tail.next = l1
+            l1 = l1.next
+        else:
+            tail.next = l2
+            l2 = l2.next
+        tail = tail.next
+    
+    if l1:
+        tail.next = l1
+    elif l2:
+        tail.next = l2
+    
+    return dummy.next
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

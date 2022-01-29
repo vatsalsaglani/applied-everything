@@ -1,0 +1,56 @@
+---
+title: "Leetcode - 347: Top K Frequent Elements"
+summary: "Given list of numbers and integer k return k most frequent elements"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 347, heaps, lists, top k frequent elements, programming, python, python3, coding, interview"
+cover_image: "https://i.imgur.com/VHgTgkU.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given an integer array nums and an integer k, return the k most frequent
+  elements. You may return the answer in any order.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+nums = [1, 1, 1, 2, 2, 3]
+k = 2
+
+Output: [1, 2]
+```
+
+## How do we solve this?
+
+We count the occurrences of every number using a `Counter` in python. 
+
+We then convert the keys and values of the `Counter` (`dictionary`) into a list of `tuples`. 
+
+We will be using `heapq` in python and it support `min-heap` only. So when we convert the `Counter` to list of `tuples` we will add a `negative` sign to to occurrences value for every number so when they get sorted by minimum value when we heapify them we can just take the first `k` numbers and return
+
+
+## Let's code it out
+
+```dart:top_k_frequent_elements.py
+
+import heapq
+from collections import Counter
+
+def topKFrequent(numbers, k):
+
+    c = Counter(numbers)
+    c = [(-v, k) for k, v in c.items()]
+    heapq.heapify(c)
+    output = []
+    for i in range(k):
+
+        item = heapq.heappop(c)
+        output.append(item)
+    
+    return output
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

@@ -1,0 +1,97 @@
+---
+title: "Leetcode - 53, 152: Maximum Subarray Problems"
+summary: "Given a list of numbers we need to find a subarray which generates maximum sum or product"
+publishedAt: "2021-05-03"
+tags: "python3, maximum subarray, leetcode, programming, max sub subarray, max product subarray"
+cover_image: "https://i.imgur.com/BBgsoKf.png"
+---
+
+The maximum subarray problems are one of the easiest to solve but sometimes a small mistake can make it very tough and there can be a cascading effect to the whole solution, so it's better to practice every small and trivial problem out there.
+
+## What's the question?
+
+Given an integer array `nums`, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+### Let's look at an example
+
+```dart:Example
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Subarray: [4, -1, 2, 1]
+```
+
+For this problem we will start with two variables the maxium sum or `maxSum` with value of the 0<sup>th</sup> index in list. And the sum at current index in the iteration i.e. `currentSum` which will be same as the `maxSum` while initializing them
+Then we will iterate over the the remaining list and check if the number at that index is larger than the `currentSum + number` and if it is we will update the `currentSum`. 
+But this doesn't mean that the max sum should also be updates we will check the maximum of `currentSum` and `maxSum` and update the `maxSum` based on that result.
+
+## Jump into code
+
+```dart:maxSumSubarray.py
+def maxSum(numbers):
+
+    maxSum = numbers[0]
+    currentSum = numbers[0]
+
+    for ix, number in enumerate(numbers[1:]):
+        currentSum = max(number, currentSum + number)
+        maxSum = max(currentSum, maxSum)
+    
+    return maxSum
+```
+
+
+Now let's check one more type of **Max Subarray** question the **Maximum Product Subarray**. 
+
+## Again, what's the question?
+
+Given an integer array `nums`, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+
+### Let's look at an example
+
+```dart:Example
+Input: nums = [2,3,-2,4]
+Output: 6
+Subarray: [2, 3]
+```
+
+### How's this different than the Max Sum Subarray problem?
+
+In multiplication we need to check of negatives also two negatives become a positive i.e. we can get a bigger positive number by taking the product of two bigger negative numbers and when that number is multiplied with a positive number the output will be more larger.
+
+We tackle this by keeping track of the minimum number in the list as well. So let's get into the coding... ⌨️
+
+```dart:maxProductSubarray.py
+def maxProduct(numbers):
+
+    previousMin = numbers[0]
+    previousMax = numbers[0]
+    maxProduct = numbers[0]
+
+    for ix, number in enumerate(numbers[1:]):
+
+        currentMin = min(previousMax * number, previousMin * number, number)
+        currentMax = max(previousMax * number, previousMin * number, number)
+        maxProduct = max(maxProduct, currentMax, currentMin)
+        previousMin = currentMin
+        previousMax = currentMax
+    
+    return maxProduct
+```
+
+And we are done with this 😅
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a href="https://twitter.com/saglanivatsal">Twitter</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

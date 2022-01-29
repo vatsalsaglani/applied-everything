@@ -1,0 +1,99 @@
+---
+title: "Leetcode - 23: Merge K Sorted Lists"
+summary: "Given a list of sorted lists merge them into a sorted lists"
+publishedAt: "2021-05-12"
+tags: "linked lists, leetcode, leetcode 23, python3, python, programming, dsa, algorithm, conding, interviews"
+cover_image: "https://i.imgur.com/OJF8O6u.png"
+---
+
+## What's the question?
+
+<blockquote>
+  You are given an array of k linked-lists lists, each linked-list is sorted in
+  ascending order. Merge all the linked-lists into one sorted linked-list and
+  return it.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+lists = [[1, 4, 5], [1, 3, 4], [2, 6]]
+Output:
+[1, 2, 3, 4, 4, 4, 5, 6]
+```
+
+## How do we solve this?
+
+This problem is somewhat similar to the <a target="_blank" href="/blog/leetcode-linkedlists-merge-2-sorted-lists">Merge 2 Sorted Lists</a> problem that we discussed earlier. If you haven't gone through that problem, I highly advice you to do so.
+
+Let's assume that we are given these three lists inside our `list` variable
+
+![Imgur](https://i.imgur.com/sAQk7lK.png)
+
+We loop through this list and take two lists at a time and pass it to our `mergeTwoLists` function and get a sorted lists with nodes occuring in both the lists.
+
+We add this merged list to a `mergedLists` variable
+
+Now we take the remaining list i.e.`[2, 6]` in the `lists` variable and we don't have any other list after that so for the second list we take `None` and pass `[2, 6], None` to our `mergeTwoLists` function and we will get `[2, 6]` as the output and append it to the `mergedLists` variable.
+
+The `mergedLists` variable will be like this
+
+![Imgur](https://i.imgur.com/nvb38Zu.png)
+
+We replace the `lists` variable with the `mergedLists` variable and then again loop over the `lists` variable and take the two remaining lists and pass it to the `mergeTwoLists` function and get one sorted list.
+
+We add that list to the `mergedLists` variable and then replace the `lists` variable with the `mergedLists` variable and at the end we will have only one list inside our `lists` variable and we will return `lists[0]`.
+
+The last list inside the `lists` variable will be
+![Imgur](https://i.imgur.com/Qe432be.png)
+
+
+## Let's code it out
+
+```dart:mergeKLists.py
+
+def mergeTwoLists(l1, l2):
+
+    dummy = ListNode()
+    tail = dummy
+
+    while l1 and l2:
+
+        if l1.val < l2.val:
+            tail.next = l1
+            l1 = l1.next
+        else:
+            tail.next = l2
+            l2 = l2.next
+        tail = tail.next
+    
+    if l1:
+        tail.next = l1
+    elif l2:
+        tail.next = l2
+    
+    return dummy.next
+
+
+def mergeKLists(lists):
+
+    if not lists or len(lists) == 0:
+        return None
+    
+    while len(lists) > 1:
+
+        mergedLists = []
+        for i in range(0, len(lists), 2):
+            l1 = lists[i]
+            l2 = lists[i + 1] if i + 1 < len(lists) else None
+            mergedLists.append(mergeTwoLists(l1, l2))
+        lists = mergedLists
+    
+    return lists[0]
+```
+
+And we are done 😅.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>
+

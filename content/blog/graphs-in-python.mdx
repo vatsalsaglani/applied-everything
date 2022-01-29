@@ -1,0 +1,252 @@
+---
+title: "Graphs in Python"
+summary: "We will look at the graph datastructure using python and check out different graph traversal techniques"
+publishedAt: "2021-05-10"
+tags: "graphs, python3, python, programming, coding, data structures, algorithms, dsa, interviews"
+cover_image: "https://i.imgur.com/IHV0n3v.png"
+---
+
+## What are graphs?
+
+Graphs are generally used as non-linear data structures to represent data which has some dependencies attached to some other data points. We might think that it's similar to tree. Yes trees are similar to graphs and a tree is alway a graph but the reverse is not true.
+
+## How are Trees different from Graphs?
+
+Trees have to abide by different set of rules, but with graphs we don't have any such rules and we end up with the structure full of nodes and edges everywhere and we can call them graphs.
+
+- A tree can only flow in one direction i.e. from the root node to the child node or the left node. But in graph there is no concept of root we can arbitrarily select any node in the graph and start the traversal.
+
+- A tree can only have one way connection i.e. a child node can have only one parent node. In graphs the concept of parent and child doesn't exist a node can connect to whichever node it likes.
+
+- A tree cannot have any cyclic links or loop but in graphs as any node can connect to any other node it can have loops and cycles.
+
+_There is only one rule that applies to graph and that is to call it a graph there should be at least one node. And a graph with only one node is called a Singleton Graph._
+
+## Are there different types of Graphs?
+
+Yes Graphs can be of differen types but, there are two important types of graph
+
+1. Directed Graphs
+2. Undirected Graphs
+
+### Directed Graphs
+
+Given two nodes and a directed edge between two nodes we can only travel from the origin to the destination and can't travel back via that edge. Graphs with such edges are called directed graphs or diagraph
+
+![Imgur](https://i.imgur.com/EU0FGj5.png)
+
+### Undirected Graphs
+
+Given two node and an undirected edge between the two nodes we can travel both ways from origin to destination and back to origin from the destination. Graph with such edges are called undirected graphs
+
+![Imgur](https://i.imgur.com/qjr80iV.png)
+
+## Mathematics of Graphs
+
+<blockquote>
+  Graphs are defined as ordered pairs of vertices and edges.
+</blockquote>
+
+        G = (V, E)
+        where V represents the set of vertices and
+        E represents the set of edges
+
+<blockquote>
+  An ordered pair is a pair of mathematical objects in which the order of the
+  ojects in the pair <b>matters</b>.
+</blockquote>
+
+### Representing Undirected Graphs
+
+
+![Imgur](https://i.imgur.com/yAa1ZCd.png)
+
+![Imgur](https://i.imgur.com/YAL54pQ.png)
+
+### Representing Directed Graphs
+
+![Imgur](https://i.imgur.com/IHV0n3v.png)
+
+![Imgur](https://i.imgur.com/w09d8km.png)
+
+
+## Graph Traversal
+
+The process of <b>SEARCHING</b> through or <b>TRAVERSING</b> through a graph data structure involves visiting each and every vertex or node in a graph. The order is which the nodes are visited via. the edges is how we can classify graph traversal
+
+
+### Breadth First Search (BFS)
+
+Traverses broad into a structure by visiting sibling or neighbour nodes before children nodes. We use a `queue` data structure for <b>breadth first traversal</b>.
+
+We can divide the process of searching by breadth into <b>5 steps</b>
+    
+1. Add a node/verted from the graph to a `queue` of nodes <b>to be visited</b>
+2. Visit the top most node in the `queue` and mark it as <b>visited</b>
+3. If that node has any neighbour check to see if they are visited or not
+4. Add any neighbouring node that still need to be <b>visited</b> into the `queue`
+5. Remove the node we have visited from the `queue`
+
+The BFS implementation will keep track of every single node's parent nodes that comes before it. This is helpful because we can take the pointers of the path that we take to get to a node from the starting node to dertimine the shortest path between those two nodes in the graph.
+
+### Depth First Search (DFS)
+
+In depth first search, we can determine where two node 'x' and 'y' have a path between them by looking at the children of the starting node and recursively determining if a path exists.
+
+Depth search will traverse down a single path, one child node at a time.
+
+## Let's code these traversal algorithms in Python
+
+### Python: Breadth First Traversal
+
+We will keep three different dictionaries to keep track of the `visited`, `distance`, and `parent` values of every node.
+We will arbitrarily start with any node as source and traverse the whole graph structure and update our three dictionaries in each iteration.
+
+```dart:bfs.py
+from queue import Queue
+
+def bfs(graph, source_node):
+
+    visited = {key:False for key, _ in graph.items()}
+    distance = {key:-1 for key, _ in graph.items()}
+    parent = {key:None for key, _ in graph.items()}
+
+    traversal_queue = Queue()
+
+    visited[source_node] = True
+    distance[source_node] = 0
+
+    traversal_queue.put(source_node)
+
+    while not traversal_queue.empty():
+
+        node = traversal_queue.get()
+
+        for neighbor in graph[node]:
+
+            if not visited[neighbor]:
+
+                distance[neighbor] = distance[node] + 1
+                visited[neighbor] = True
+                parent[neighbor] = node
+                traversal_queue.put(neighbor)
+    
+    return distance, visited, parent
+```
+
+As we mentioned earlier we can use the BFS algorithm to find the shortest distance between two nodes in a graph. So given two nodes we can provide the source node as any of the two nodes and run the `bfs` function. Now in the `distance` dictionary check the value of the other node and that's the shortest distance between the two nodes.
+
+We can also implement the `bfs` without using the `queue` built-in library by just using lists as follows
+
+```dart:bfs_list.py
+def bfs_list(graph, source_node):
+
+    visited = {key:False for key, _ in graph.items()}
+    distance = {key: -1 for key, _ in graph.items()}
+    parent = {key: None for key, _ in graph.items()}
+
+    traversal_queue = []
+
+    
+    visited[source_node] = True
+    distance[source_node] = 0
+
+    traversal_queue.append(source_node)
+
+    while traversal_queue:
+
+        node = traversal_queue.pop()
+        
+        for neighbour in graph[node]:
+
+            if not visited[neighbour]:
+
+                distance[neighbour] = distance[node] + 1
+                visited[neighbour] = True
+                parent[neighbour] = node
+                traversal_queue.append(neighbour)
+    
+    return distance, visited, parent
+```
+
+
+### Python: Depth First Traversal
+
+Here, we will implement both the `pre` and `post` methods of Depth First Traversal algorithms. The difference between the `pre` and `post` is just based on how we ouput the nodes while traversing the graph.
+
+If we print the node as we visit it we call it `pre` and if we visit the node and go it's child node and it's child node and print the child node and then print the parent node we call it `post`. 
+
+DFS is a recursive traversal wherein we check if a path exists between two nodes by going through it's children and checking if path exists between them using the same function.
+
+Let's start with the `pre` order depth first traversal
+
+```dart:dfs_pre.py
+
+marked = {key:False for key, _ in graph.items()}
+visit_lst = []
+
+def dfs_pre(G, v):
+
+    def visit(node):
+        visit_lst.append(node)
+    
+    visit(v)
+    marked[v] = True
+    for node in G[v]:
+
+        if not marked[node]:
+
+            dfs_pre(G, node)
+
+```
+
+Let's look at the `post` version of the depth first traversal
+
+```dart:dfs_post.py
+marked = {key:False for key, _ in graph.items()}
+visit_lst = []
+
+def dfs_post(G, v):
+
+    def visit(node):
+        visit_lst.append(node)
+    
+    marked[v] = True
+    for node in G[v]:
+        
+        if not marked[node]:
+
+            dfs_post(G, node)
+    
+    visit(v)
+```
+
+So when we run both `dfs_pre` and `dfs_post` on the same graph we can check the value of the visit_lst to see how the nodes are added to it.
+
+Let's look at the visit_lst output for bot the types of traversals for the graph
+
+```dart:graph
+adj_lst = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["B", "F"],
+    "D": [],
+    "E": ["F"],
+    "F": []
+}
+```
+
+```dart:pre
+['A', 'B', 'D', 'E', 'F', 'C']
+```
+
+```dart:post
+['D', 'F', 'E', 'B', 'C', 'A']
+```
+
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>
+
+
+
+

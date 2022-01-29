@@ -1,0 +1,81 @@
+---
+title: "Leetcode - 435: Non-overlapping Intervals"
+summary: "Given a list of intervals, return minimum number of intervals to delete to make the intervals non-overlapping"
+publishedAt: "2021-05-14"
+tags: "leetcode, leetcode 435, intervals, lists, non overlapping intervals, python3, python, programming, interview, questions, coding, dsa, algorithm"
+cover_image: "https://i.imgur.com/oFebMUJ.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given an array of intervals intervals where intervals[i] = [starti, endi],
+  return the minimum number of intervals you need to remove to make the rest of
+  the intervals non-overlapping.
+</blockquote>
+
+
+### Let's see an example
+
+```dart:example
+
+Input
+intervals = [[1,2],[2,3],[3,4],[1,3]]
+Output = 1
+
+```
+
+
+## How do we solve this?
+
+Let's put the intervals `[[1,2],[2,3],[3,4],[1,3]]` on the number line
+
+![Imgur](https://i.imgur.com/ihLaZdJ.png)
+
+
+Here, `[1, 2]` and `[1, 3]` are overlapping. 
+
+![Imgur](https://i.imgur.com/yythdS0.png)
+
+
+We can remove `[1, 3]` because `1` is covered in `[1,2]` and `3` is covered in both `[2, 3]` and `[3, 4]`.
+
+![Imgur](https://i.imgur.com/yythdS0.png)
+
+
+In the example the intervals aren't sorted. We need to sort them but how dow we sort them?
+
+Let's say the `intervals` list has `[[0, 2], [0. 1]]` as intervals. The <b>left</b> of both the intervals is same i.e. `0`. But the <b>right</b> is different. 
+
+We know that `[0, 1]` get's covered in `[0, 2]`, so we just need to delete `[0, 1]`. So if we have a sorted intervals list by the `end` of interval we can easily finish the problem in a single loop.
+
+We initialize a variable `previousEnd` to store what our `end` value was previously. If the for current interval at index `i` we have a `start` and an `end` value we can check if the `start` is greater than or equal to the `previousEnd` there is no overlap between the current interval and interval that was there previously. We can replace the `previousEnd` with the current `end`.
+
+If the condition above doesn't hold then we know there is an overlap and as we have sorted the intervals by the `end` key we know that we can delete/erase the current interval so we increase the delete/remove count.
+
+
+## Let's code it out
+
+```dart:non_overlapping_intervals.py
+
+def deleteOverlappingIntervals(intervals:
+
+    if not intervals: return 0
+
+    intervals.sort(key: lambda x: x[1])
+    previousEnd, count = float("-inf"), 0
+
+    for start, end in intervals:
+
+        if start >= previousEnd:
+            # no overlap
+            previousEnd = end
+        else:
+            # overlap
+            count += 1
+    
+    return count
+
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.

@@ -1,0 +1,357 @@
+---
+title: "Let's talk about Linked Lists"
+summary: "The basic idea behind Linked Lists and how are they different from Arrays/Lists"
+publishedAt: "2021-05-11"
+tags: "linked lists, programming, python3, python, technology, interview, coding"
+cover_image: "https://i.imgur.com/UK9LG8Q.png"
+---
+
+## What actually is a Linked List?
+
+In short, a Linked List is a linear data structure similar to an array but it doesn't utilize contiguous data blocks in the memory like arrays or lists does.
+
+We will come to the memory part at a later stage in this blog but before that let's see how's a Linked List made.
+
+### Parts of a Linked List
+
+A Linked List is made up of series of nodes, which are the elements of the list.
+
+The starting point in a linked list is a reference to the first node, and is reffered as the `Head` node.
+
+The end of a linked list is not a node but rather a node that points to `NULL`, or empty list.
+
+Let's see it in an image
+
+![Imgur](https://i.imgur.com/igMp6NG.png)
+
+A <b>node</b> in a linked list only knows about the data it contains and a reference to it's <b>neighbor</b>.
+
+![Imgur](https://i.imgur.com/ab7DYnj.png)
+
+## How's a Linked List different than an Array or a List in Python?
+
+The first difference between a linked list and an array/list is the way they are constructed.
+As mentioned above, linked list is bacially a collection of nodes and a head which has a reference to the first node.
+
+In Arrays/Lists there is no concept of head nodes.
+
+One more main difference is how each data structure utilizes the memory. In case of arrays/lists when initializing those it use a contiguous block of memory.
+Now you might as what does that mean?
+
+Let's say this is our memory at start
+
+![Imgur](https://i.imgur.com/mxOLVRI.png)
+
+After initializing a list/array
+
+![Imgur](https://i.imgur.com/tJ4A2X7.png)
+
+No matter the size of the list/array a default block of memory will be initialize and then elements will be filled. In programming languages like Python and Javascript we don't see this allocation or don't need to manually do this allocation because it's hidden behind layers and layers of abstraction.
+
+No assume we want to copy this array/list into another variable; it will again take one more big block of memory and copy things so there is a lot of memory usage in case of lists/array.
+
+_So, how does a linked list help?_
+
+In case of linked list, the nodes can be at any place in the memory as every node has the data and info about it's neighbour node we can still traverse all the nodes when needed.
+This is how the memory looks like when we have a linked list with 6 nodes.
+
+![Imgur](https://i.imgur.com/UK9LG8Q.png)
+
+Now let's say we want to <i>copy this linked list into a new one</i>. We just need to initialize the `head` node and provide a reference to the first node and traverse the previous list and keep on adding the neighbors to the new list and we are done.
+
+Linked Lists are more memory efficient but, they have their own drawbacks. Let's say we want to delete the last node in the linked list we would need to travel to the end and delete it and if there are a lot of elements it will take a lot of time.
+
+Enough of theory let's code some Linked Lists ⌨️
+
+## Linked Lists in Python
+
+### How to initialize the Linked List data structure in Python?
+
+```dart:linked_list_node
+class Node:
+    def __init__(self, val, neighbors = None):
+
+        self.val = val
+        self.neighbors = neighbors
+```
+
+### How to traverse a Linked List in Python?
+
+```dart:linked_list_traverse
+## linked list data structure from above
+class Node:
+    def __init__(self, val, neighbors = None):
+
+        self.val = val
+        self.neighbors = neighbors
+
+## linked list traversal and out functionalities
+
+class LinkedList:
+
+    def __init__(self):
+        self.headval = None
+    
+    def listprint(self):
+        linked_list = self.headval
+        while linked_list:
+            print(linked_list.val)
+            # move to next node
+            linked_list = linked_list.next
+```
+
+*Executing the `LinkedList` object*
+
+```dart:execute_linked_list
+# initialize empty linked list
+list1 = LinkedList()
+# add first node reference to headval
+list1.headval = Node("MON")
+n2 = Node("TUE")
+n3 = Node("WED")
+
+# next of headval
+list1.headval.next = n2
+# next of n2
+n2.next = n3
+
+## printing the linked list
+list1.listprint()
+>>> MON
+    TUE
+    WED
+```
+
+### How to add a node at the beginning in a linked list using Python?
+
+```dart:add_node_at_start
+class LinkedList:
+
+    def __init__(self):
+        self.headval = None
+    
+    def listprint(self):
+        linked_list = self.headval
+        while linked_list:
+            print(linked_list.val)
+            # move to next node
+            linked_list = linked_list.next
+    
+    def addAtBeginning(self, data):
+        node = Node(data)
+        node.next = self.headval
+        self.headval = node
+
+## try it out
+l = LinkedList()
+l.headval = Node("MON")
+n2 = Node("TUE")
+n3 = Node("WED")
+
+l.headval.next = n2
+n2.next = n3
+
+l.addAtBeginning("SUN")
+
+l.listprint()
+>>> SUN
+    MON
+    TUE
+    WED
+```
+
+### How to insert a node at the end in a linked list using Python?
+
+```dart:add_node_at_end
+
+class LinkedList:
+
+    def __init__(self):
+        self.headval = None
+    
+    def listprint(self):
+        linked_list = self.headval
+        while linked_list:
+            print(linked_list.val)
+            # move to next node
+            linked_list = linked_list.next
+    
+    def addAtBeginning(self, data):
+        node = Node(data)
+        node.next = self.headval
+        self.headval = node
+    
+    def addAtEnd(self, data):
+        node = Node(data)
+        if self.headval is None:
+            self.headval = node
+            return
+        
+        last = self.headval
+        while last.next:
+            last = last.next
+        last.next = node
+
+## try it out
+l = LinkedList()
+l.headval = Node("MON")
+n2 = Node("TUE")
+n3 = Node("WED")
+
+l.headval.next = n2
+n2.next = n3
+
+l.atBeginning("SUN")
+l.atEnd("THU")
+>>> SUN
+    MON
+    TUE
+    WED
+    THU
+```
+
+### How to insert a node in between two node in a Linked List using Python?
+
+```dart:insert_in_between
+class LinkedList:
+
+    def __init__(self):
+        self.headval = None
+    
+    def listprint(self):
+        linked_list = self.headval
+        while linked_list:
+            print(linked_list.val)
+            # move to next node
+            linked_list = linked_list.next
+    
+    def addAtBeginning(self, data):
+        node = Node(data)
+        node.next = self.headval
+        self.headval = node
+    
+    def addAtEnd(self, data):
+        node = Node(data)
+        if self.headval is None:
+            self.headval = node
+            return
+        
+        last = self.headval
+        while last.next:
+            last = last.next
+        last.next = node
+    
+    def addInBetween(self, middle_node, data):
+        node = Node(data)
+        if middle_node is None:
+            return "Node mentioned is absent"
+        
+        node.next = middle_node.next
+        middle_node.next = node
+
+# try it out
+
+l = LinkedList()
+l.headval = Node("MON")
+n2 = Node("TUE")
+n3 = Node("THU")
+
+l.headval.next = n2
+n2.next = n3
+
+l.inBetween(l.headval.next, "WED")
+>>> MON
+    TUE
+    WED
+    THU
+```
+
+### How to remove a node in a linked list using Python?
+
+```dart:remove_node
+class LinkedList:
+
+    def __init__(self):
+        self.headval = None
+    
+    def listprint(self):
+        linked_list = self.headval
+        while linked_list:
+            print(linked_list.val)
+            # move to next node
+            linked_list = linked_list.next
+    
+    def addAtBeginning(self, data):
+        node = Node(data)
+        node.next = self.headval
+        self.headval = node
+    
+    def addAtEnd(self, data):
+        node = Node(data)
+        if self.headval is None:
+            self.headval = node
+            return
+        
+        last = self.headval
+        while last.next:
+            last = last.next
+        last.next = node
+    
+    def addInBetween(self, middle_node, data):
+        node = Node(data)
+        if middle_node is None:
+            return "Node mentioned is absent"
+        
+        node.next = middle_node.next
+        middle_node.next = node
+    
+    def removeNode(self, removekey):
+        headval = self.headval
+        ## if first node
+        if headval:
+            if headval.val == removekey:
+                self.headval = headval.next
+                headval = None
+                return
+        
+        while headval:
+            if headval.val == removekey:
+                break
+            prev = headval
+            headval = headval.next
+        
+        if not headval:
+            return
+        
+        prev.next = headval.next
+
+        headval = None
+
+## try it out
+
+l = LinkedList()
+l.atBeginning("MON")
+l.atBeginning("TUE")
+l.atBeginning("WED")
+l.atBeginning("THU")
+l.atBeginning("FRI")
+l.listprint()
+
+>>> FRI
+    THU
+    WED
+    TUE
+    MON
+
+l.removeNode("TUE")
+l.listprint()
+>>> FRI
+    THU
+    WED
+    MON
+```
+
+That's it for the basics of Linked List and how it can be implemented in Python.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>
+

@@ -1,0 +1,83 @@
+---
+title: "Leetcode - 226: Invert Binary Tree"
+summary: "Given a binary tree, we need to invert it"
+publishedAt: "2021-05-12"
+tags: "Leetcode, leetcode 226, trees, binary tree, invert tree, programming, python, coding, interviews, dsa, algorithm"
+cover_image: "https://i.imgur.com/ubYplfT.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given the root of a binary tree, invert the tree, and return its root.
+</blockquote>
+
+### Let's see an example
+
+```dart:example
+Input
+root = [2, 1, 3]
+Ouput
+[2, 3, 1]
+```
+
+We don't change the `root` node just the left subtree and right subtree of the `root` nodes and child nodes exchanges their positions.
+
+## How do we solve this?
+
+In <b>Python</b> it's very easy to swap two variable. 
+
+In case of swappnig left subtree and right subtree we can just do `root.left, root.right = root.right, root.left` and the subtrees are swapped and we can <b>recursively</b> do this. 
+
+Here, the word <b>recursion</b> is important. When it comes to solving problems/questions related to <i>trees</i> we mostly will use <b>recursion</b>. 
+
+Recursion is very sneaky and hard to comprehend but it comes with practice.
+
+Let's assume we are given the below tree to invert. 
+
+![Imgur](https://i.imgur.com/uQAOxsL.png)
+
+We have a hypothetical function called `invertTree()` which takes the root node and inverts the tree.
+
+We start with the root node and it will recursively keep on 
+moving to the left and right subtrees and their left and right children. Let's see here;
+
+![Imgur](https://i.imgur.com/G47Hplk.png)
+
+The left and right subtrees will change as follows
+
+![Imgur](https://i.imgur.com/vpTfS7l.png)
+
+As we move above the left subtree will be entirely replaces by the right subtree will be replaced by the leftsubtree like this.
+
+![Imgur](https://i.imgur.com/G4MmIvS.png)
+
+Like this we will have inverted our binary tree.
+
+## Let's code it out
+
+```dart:invert_binary_tree.py
+
+def invertTree(root):
+
+    if root:
+
+        root.left, root.right = root.right, root.left
+
+        if root.left:
+            invertTree(root.left)
+        if root.right:
+            invertTree(root.right)
+        
+
+        return root
+    
+    else:
+
+        return None
+```
+
+And we are done. Just 10 to 11 lines of code.
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>.
+

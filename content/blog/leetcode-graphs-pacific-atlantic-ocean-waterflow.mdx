@@ -1,0 +1,121 @@
+---
+title: "Leetcode - 417: Pacific Atlantic Water Flow"
+summary: "Given height of each unit cell in a content return a list of coordinates where the water flows from both the Pacific and Atlantic ocean"
+publishedAt: "2021-05-10"
+tags: "programming, leetcode, interview, coding, python3, 417, pacific atlantic ocean waterflow, python, graphs, dfs, dsa, algorithms"
+cover_image: "https://i.imgur.com/ubGE8fZ.png"
+---
+
+## What's the question?
+
+<blockquote>
+  You are given an m x n integer matrix heights representing the height of each
+  unit cell in a continent. The Pacific ocean touches the continent's left and
+  top edges, and the Atlantic ocean touches the continent's right and bottom
+  edges. Water can only flow in four directions: up, down, left, and right.
+  Water flows from a cell to an adjacent one with an equal or lower height.
+  Return a list of grid coordinates where water can flow to both the Pacific and
+  Atlantic oceans.
+</blockquote>
+
+### Let's look at an example
+
+For example we are given the following cell unit heights:
+
+![Imgur](https://i.imgur.com/IHl6gN6.png)
+
+For every unit cell let's see if the water can flow from it
+
+#### From `2`
+
+![Imgur](https://i.imgur.com/c56DANG.png)
+
+From `2` the water can only flow to the unit cell with height `1`.
+
+#### From `1`
+
+![Imgur](https://i.imgur.com/EuonyJK.png)
+
+From `1` the water cannot flow to any of the three cells as the height of 1 is less than the height of all the other cells
+
+#### From `3`
+
+![Imgur](https://i.imgur.com/P45wRpP.png)
+
+From `3` the water can only flow to the unit cell with height `2`.
+
+#### From `5`
+
+![Imgur](https://i.imgur.com/NOqWzYZ.png)
+
+From `5` the water can flow to unit cells with height `1` and `3`.
+
+*Looking at all the images from above we can say the the unit cell with height `1` has water flowing from both the <b>Pacific</b> and the <b>Atlantic</b> ocean via unit cell with height `2` and unit cell with height `5` respectivel.*
+
+## How do we solve this problem?
+
+Instead of directly finding the coordinates where the water flows from both the Pacific and Atlantic ocean we can have two sets for Pacific and Atlantic ocean which has coordinates where the water flows from either of them. 
+
+Now we would just to find the coordinates which are present in both the sets because those coordinates will have water flowing from both the Pacific and Atlantic ocean
+
+### Let's code this one out
+
+
+```dart:pacific_atlantic_waterflow.py
+
+def pacific_atlantic_waterflow(heights):
+
+    M, N = len(heights), len(heights[0])
+
+    ## lists to store pacific and atlantic coordinates
+    pacific, atlantic = [], []
+
+    ## sets to store coordinates where the water flows from either of them
+    visited_pacific, visited_atlantic = set(), set()
+
+    ## initialize coordinates for pacific part and atlantic part
+    for r in range(M):
+        # left 
+        pacific.append((r, 0))
+        # right 
+        atlantic.append((r, N - 1))
+
+    for c in range(N):
+        # top
+        pacific.append((0, c))
+        # bottom
+        atlantic.append((M-1, c))
+
+    ## direction of water flow left, right, top, bottom
+    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+    def dfs(r, c, visited):
+
+        # start coordinates water will flow
+        visited.add((r, c))
+        for dr, dc in directions:
+            row, col = dr + r, dc + c
+            if (
+                # row in bounds of M
+                row in range(M)
+                and
+                # column in bounds of N
+                col in range(N)
+                and
+                # water flow condition higher level to lower level
+                heights[r][c] <= heights[row][col]
+                and
+                # not already visited
+                (row, col) not in visited
+            ):
+                # recursion for going inside the grid
+                dfs(row, col, visited)
+    
+
+    for r, c in pacific: dfs(r, c, visited_pacific)
+    for r, c in atlantic: dfs(r, c, visited_atlantic)
+
+    return visited_pacific & visited_atlantic
+```
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>

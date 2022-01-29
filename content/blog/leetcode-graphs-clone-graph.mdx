@@ -1,0 +1,65 @@
+---
+title: "Leetcode - 133: Clone Graph"
+summary: "Give a reference of node in a connected undirected graph return a deep copy of that graph"
+publishedAt: "2021-05-10"
+tags: "python3, programming, python, graphs, dfs, depth first search, traversal, graph traversal, dsa, algorithm, interview questions"
+cover_image: "https://i.imgur.com/AvQNUGL.png"
+---
+
+## What's the question?
+
+<blockquote>
+  Given a reference of a node in a connected undirected graph. Return a deep
+  copy (clone) of the graph. Each node in the graph contains a value (int) and a
+  list (List[Node]) of its neighbors.
+</blockquote>
+
+## How do we solve this?
+
+No, we cannot return the same graph as given it won't work. We also cannot change the placement of any node in the graph as shown in the below image.
+
+![Imgur](https://i.imgur.com/ymG8WUZ.png)
+
+### Then how do we solve this?!
+
+Here, we know that we don't need to find anything like distance between nodes, or shortest path, etc. We just need to take the given reference node and make a graph based on that.
+
+We can just do it by traversing the graph from the given reference node in a recursive fashion and returning the copy of that whole graph with reference to the give node
+
+### Let's code it out.
+
+```dart:clone_graph.py
+
+def clone_graph(node):
+
+    oldToNew = {}
+
+    def dfs(node):
+
+        if node in oldToNew:
+            return oldToNew[node]
+        
+        copy = Node(node.val)
+        oldToNew[val] = copy
+        for neighbor in node.neighbors:
+            copy.neighbors.append(dfs(neighbor))
+        
+        return copy
+    
+    return dfs(node) if node else None
+```
+
+#### Defination of `Node`
+
+```dart:node.py
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+```
+
+Yeah, it's just 10 to 12 lines of code. But the paramount thing here is recursion. Given the reference node it will create a copy of that node and recursively traverse through it's neighbors and keep on doing the same thing for it's neighbors.
+
+
+
+That's it for this blog, hope you found this helpful. You can connect with me on <a target="_blank" href="https://twitter.com/saglanivatsal">Twitter</a>
