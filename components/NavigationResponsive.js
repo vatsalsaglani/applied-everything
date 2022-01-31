@@ -117,18 +117,18 @@ const MenuLinks = ({ isOpen }) => {
       >
         <MenuItem to="/blog">Blogs</MenuItem>
         <MenuItem to="/projects">Projects</MenuItem>
-        <MenuItem display={{ md: "flex", lg: "flex" }} to="#">
-          <IconButton
-            aria-label="icon"
-            icon={iconType[colorMode]}
-            size="lg"
-            isRound
-            variant="ghost"
-            fontWeight="bold"
-            color={iconColor[colorMode]}
-            onClick={toggleColorMode}
-          />
-        </MenuItem>
+        {/* <MenuItem display={{ md: "flex", lg: "flex" }} to="#"> */}
+        <IconButton
+          aria-label="icon"
+          icon={iconType[colorMode]}
+          size="lg"
+          isRound
+          variant="ghost"
+          fontWeight="bold"
+          color={iconColor[colorMode]}
+          onClick={toggleColorMode}
+        />
+        {/* </MenuItem> */}
       </Stack>
     </Box>
   );
