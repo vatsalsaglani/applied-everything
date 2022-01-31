@@ -25,7 +25,7 @@ export default function Blog({ posts }) {
     <Box minWidth="100%">
       <Box minWidth="100%">
         <Box>
-          <Container bg={useColorModeValue("#fff", "gray.900")} minWidth="70%">
+          <Container bg={useColorModeValue("#fff", "gray.900")} minWidth="100%">
             <Navigation />
           </Container>
         </Box>
